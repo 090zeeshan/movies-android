@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/actionWatchlist"
+        android:title="@string/watchlist"
+        android:icon="@drawable/baseline_playlist_play_black_24dp"/>
+    <item
+        android:id="@+id/actionFavorites"
+        android:title="@string/favorites"
+        android:icon="@drawable/baseline_favorite_black_24dp"/>
+    <item
+        android:id="@+id/actionWatched"
+        android:title="@string/watched"
+        android:icon="@drawable/baseline_playlist_add_check_black_24dp"/>
+
+</menu>
