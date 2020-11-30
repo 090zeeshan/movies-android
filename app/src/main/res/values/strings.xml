@@ -8,4 +8,6 @@
     <string name="open_drawer">open</string>
     <string name="close_drawer">close</string>
     <string name="home">Home</string>
+    <string name="release_year">Release Year:</string>
+    <string name="type">Type:</string>
 </resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.vd.movies.repository.model.Movie" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivThumbnail"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:padding="@dimen/_2sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:src="@{movie.poster}" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{movie.title}"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintStart_toEndOf="@id/ivThumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Inception\nsdfsdf" />
+
+        <TextView
+            android:id="@+id/tvReleaseYearLbl"
+            style="@style/ResultInfoLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/release_year"
+            app:layout_constraintStart_toEndOf="@id/ivThumbnail"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <TextView
+            android:id="@+id/tvReleaseYear"
+            style="@style/ResultInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{movie.year}"
+            app:layout_constraintStart_toEndOf="@id/tvReleaseYearLbl"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="2010" />
+
+
+        <TextView
+            android:id="@+id/tvTypeLbl"
+            style="@style/ResultInfoLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:text="@string/type"
+            app:layout_constraintStart_toEndOf="@id/tvReleaseYear"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <TextView
+            android:id="@+id/tvType"
+            style="@style/ResultInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{movie.type}"
+            app:layout_constraintStart_toEndOf="@id/tvTypeLbl"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="Movie" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
