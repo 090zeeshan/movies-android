@@ -5,4 +5,5 @@ import com.vd.movies.repository.model.SearchResult
 
 interface IApi {
     suspend fun searchMovies(key: String): List<Movie>
+    suspend fun getMovieByImdbId(imdbId: String): Movie
 }

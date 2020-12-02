@@ -43,4 +43,8 @@ class Api : IApi {
         val movies = moviesService.search(key).movies
         return movies ?: emptyList()
     }
+
+    override suspend fun getMovieByImdbId(imdbId: String): Movie {
+        return moviesService.getByImdbId(imdbId)
+    }
 }

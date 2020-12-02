@@ -31,7 +31,7 @@
             android:textSize="@dimen/_16ssp"
             app:layout_constraintStart_toEndOf="@id/ivThumbnail"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Inception\nsdfsdf" />
+            tools:text="Inception\n" />
 
         <TextView
             android:id="@+id/tvReleaseYearLbl"

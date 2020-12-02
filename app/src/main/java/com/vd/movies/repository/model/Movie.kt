@@ -48,6 +48,15 @@ data class Movie(
     @SerializedName("Type")
     var type: String,
 
+    @SerializedName("imdbRating")
+    var imdbRating: String,
+
+    @SerializedName("Country")
+    var country: String,
+
+    @SerializedName("Rated")
+    var rated: String,
+
     var isAddedToWatchList: Boolean = false,
     var isAddedToWatchedList: Boolean = false,
     var isAddedToFavorites: Boolean = false

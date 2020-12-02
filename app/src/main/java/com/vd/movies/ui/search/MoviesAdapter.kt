@@ -8,7 +8,11 @@ import com.vd.movies.R
 import com.vd.movies.databinding.ItemMovieBinding
 import com.vd.movies.repository.model.Movie
 
-class MoviesAdapter(val context: Context, var list: List<Movie>) :
+class MoviesAdapter(
+    val context: Context,
+    var list: List<Movie>,
+    val onItemClicked: (Movie) -> Unit
+) :
     RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -22,6 +26,7 @@ class MoviesAdapter(val context: Context, var list: List<Movie>) :
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(list[position])
+        holder.itemView.setOnClickListener { onItemClicked(list[position]) }
     }
 
 

@@ -9,4 +9,8 @@ class Repository: IRepository {
     override suspend fun searchMovies(key: String): List<Movie> {
         return api.searchMovies(key)
     }
+
+    override suspend fun getMovieByImdbId(imdbId: String): Movie {
+        return api.getMovieByImdbId(imdbId)
+    }
 }

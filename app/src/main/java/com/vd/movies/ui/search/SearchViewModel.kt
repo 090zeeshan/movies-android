@@ -1,12 +1,15 @@
 package com.vd.movies.ui.search
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.vd.movies.repository.IRepository
 import com.vd.movies.repository.Repository
 import com.vd.movies.repository.model.Movie
-import kotlinx.coroutines.*
+import com.vd.movies.ui.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel : BaseViewModel("Search") {
     val repository: IRepository by lazy { Repository() }
     val searchKey = MutableLiveData<String>("")
     val moviesList = MutableLiveData<List<Movie>>(emptyList())
@@ -34,11 +37,16 @@ class SearchViewModel : ViewModel() {
             isLoaderVisible.postValue(false)
             isNoDataLabelVisible.postValue(result.isEmpty())
             isListVisible.postValue(result.isNotEmpty())
+            title.postValue("Search results for \"${searchKey.value}\"")
             searchKey.postValue("")
         }
     }
 
     fun onSearchPressed() {
         search(searchKey.value ?: "")
+    }
+
+    fun onItemClicked(movie: Movie) {
+        navigate(SearchFragmentDirections.actionDetailsFragment(movie.imdbId))
     }
 }

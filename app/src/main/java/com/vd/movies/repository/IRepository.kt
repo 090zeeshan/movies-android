@@ -4,4 +4,5 @@ import com.vd.movies.repository.model.Movie
 
 interface IRepository {
     suspend fun searchMovies(key: String): List<Movie>
+    suspend fun getMovieByImdbId(imdbId: String): Movie
 }
