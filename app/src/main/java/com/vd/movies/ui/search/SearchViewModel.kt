@@ -10,15 +10,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SearchViewModel : BaseViewModel("Search") {
-    val repository: IRepository by lazy { Repository() }
     val searchKey = MutableLiveData<String>("")
     val moviesList = MutableLiveData<List<Movie>>(emptyList())
     val isLoaderVisible = MutableLiveData(false)
     val isNoDataLabelVisible = MutableLiveData(false)
     val isListVisible = MutableLiveData(false)
 
-    fun init(searchKey: String) {
+    fun init(repository: IRepository, searchKey: String) {
         this.searchKey.value = searchKey
+        this.repository = repository
         search(searchKey)
     }
 

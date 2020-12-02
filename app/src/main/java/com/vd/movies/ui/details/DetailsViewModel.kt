@@ -9,17 +9,47 @@ import com.vd.movies.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailsViewModel : BaseViewModel("Details") {
-    val repository: IRepository = Repository()
+class DetailsViewModel() : BaseViewModel("Details") {
     val isLoaderVisible = MutableLiveData(true)
     val movie = MutableLiveData<Movie>(null)
 
-    fun init(imdbId: String) {
+    fun init(repository: IRepository, imdbId: String) {
+        this.repository = repository
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getMovieByImdbId(imdbId)
             movie.postValue(result)
             isLoaderVisible.postValue(false)
             title.postValue(result.title + " Details")
+        }
+    }
+
+    fun onAddToWatchListPressed() {
+        movie.value?.let {
+            it.isAddedToWatchList = !it.isAddedToWatchList
+            viewModelScope.launch (Dispatchers.IO){
+                repository.updateMovie(it)
+                movie.postValue(it)
+            }
+        }
+    }
+
+    fun onAddToWatchedListPressed() {
+        movie.value?.let {
+            it.isAddedToWatchedList = !it.isAddedToWatchedList
+            viewModelScope.launch (Dispatchers.IO){
+                repository.updateMovie(it)
+                movie.postValue(it)
+            }
+        }
+    }
+
+    fun onAddToFavoritesPressed() {
+        movie.value?.let {
+            it.isAddedToFavorites = !it.isAddedToFavorites
+            viewModelScope.launch (Dispatchers.IO){
+                repository.updateMovie(it)
+                movie.postValue(it)
+            }
         }
     }
 }

@@ -18,8 +18,6 @@ import timber.log.Timber
 class HomeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.i("onCreate")
-
     }
 
     override fun onCreateView(
@@ -31,15 +29,12 @@ class HomeFragment : BaseFragment() {
         view.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionSearchFragment(etSearch.text.toString()))
         }
-        Timber.i("onCreateView")
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivityDelegate.enableDrawer(true)
         mainActivityDelegate.setTitle("Movies")
-        Timber.i("onViewCreated")
     }
 
     override fun getViewModel(): BaseViewModel? {

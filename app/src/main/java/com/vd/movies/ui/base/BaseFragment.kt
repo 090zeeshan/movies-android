@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.vd.movies.navigation.NavigationCommand
 import com.vd.movies.ui.MainActivityDelegate
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment(val isDrawerEnabled: Boolean = true) : Fragment() {
     protected lateinit var mainActivityDelegate: MainActivityDelegate
 
     override fun onAttach(context: Context) {
@@ -19,6 +19,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivityDelegate.enableDrawer(isDrawerEnabled)
         getViewModel()?.title?.observe(viewLifecycleOwner, Observer {
             mainActivityDelegate.setTitle(it)
         })

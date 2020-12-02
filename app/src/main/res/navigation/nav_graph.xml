@@ -51,6 +51,10 @@
             android:name="listingType"
             android:defaultValue="WATCHLIST"
             app:argType="com.vd.movies.ui.listing.ListingType" />
+
+        <action
+            android:id="@+id/actionDetailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 
     <fragment
@@ -63,6 +67,10 @@
             android:name="listingType"
             android:defaultValue="FAVORITES"
             app:argType="com.vd.movies.ui.listing.ListingType" />
+
+        <action
+            android:id="@+id/actionDetailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 
     <fragment
@@ -75,6 +83,10 @@
             android:name="listingType"
             android:defaultValue="WATCHED"
             app:argType="com.vd.movies.ui.listing.ListingType" />
+
+        <action
+            android:id="@+id/actionDetailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 
     <fragment

@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.vd.movies.R
 import com.vd.movies.databinding.FragmentSearchBinding
+import com.vd.movies.repository.Repository
 import com.vd.movies.ui.MainActivityDelegate
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
@@ -20,19 +21,16 @@ import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_search.*
 import timber.log.Timber
 
-class SearchFragment : BaseFragment() {
+class SearchFragment : BaseFragment(false) {
     private lateinit var viewModel: SearchViewModel
     private lateinit var moviesAdapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val searchKey = arguments?.let { SearchFragmentArgs.fromBundle(it).searchKey } ?: ""
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-        arguments?.let {
-            viewModel.init(SearchFragmentArgs.fromBundle(it).searchKey)
-        }
-
-        Timber.i("onCreate")
-
+        viewModel.init(Repository(requireContext()), searchKey)
     }
 
     override fun onCreateView(
@@ -43,15 +41,13 @@ class SearchFragment : BaseFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        Timber.i("onCreateView")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainActivityDelegate.enableDrawer(false)
 
-        moviesAdapter = MoviesAdapter(requireContext(), emptyList()){
+        moviesAdapter = MoviesAdapter(requireContext(), emptyList()) {
             viewModel.onItemClicked(it)
         }
         rvResult.adapter = moviesAdapter
@@ -59,7 +55,7 @@ class SearchFragment : BaseFragment() {
             moviesAdapter.list = it
             moviesAdapter.notifyDataSetChanged()
         })
-        btnSearch.setOnClickListener{
+        btnSearch.setOnClickListener {
             viewModel.onSearchPressed()
         }
 
@@ -69,8 +65,6 @@ class SearchFragment : BaseFragment() {
     override fun getViewModel(): BaseViewModel {
         return viewModel
     }
-
-
 }
 
 

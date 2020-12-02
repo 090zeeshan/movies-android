@@ -1,8 +1,13 @@
 package com.vd.movies.repository.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "movies")
 data class Movie(
+    @PrimaryKey
     @SerializedName("imdbID")
     var imdbId: String,
 

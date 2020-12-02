@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.vd.movies.R
 import com.vd.movies.databinding.FragmentDetailsBinding
+import com.vd.movies.repository.Repository
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
+import kotlinx.android.synthetic.main.fragment_details.*
 import timber.log.Timber
 
-class DetailsFragment : BaseFragment() {
+class DetailsFragment : BaseFragment(false) {
     lateinit var viewModel: DetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +23,7 @@ class DetailsFragment : BaseFragment() {
         viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
         arguments?.let {
             val imdbId = DetailsFragmentArgs.fromBundle(it).imdbId
-            viewModel.init(imdbId)
-            Timber.i(imdbId)
+            viewModel.init(Repository(requireContext()),imdbId)
         }
     }
 
@@ -35,6 +36,14 @@ class DetailsFragment : BaseFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnWatchList.setOnClickListener { viewModel.onAddToWatchListPressed() }
+        btnWatched.setOnClickListener { viewModel.onAddToWatchedListPressed() }
+        btnFavorite.setOnClickListener { viewModel.onAddToFavoritesPressed() }
     }
 
     override fun getViewModel(): BaseViewModel? {
