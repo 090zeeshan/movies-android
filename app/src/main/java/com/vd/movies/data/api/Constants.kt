@@ -1,3 +1,3 @@
-package com.vd.movies.repository.api
+package com.vd.movies.data.api
 
 const val BASE_URL = "http://www.omdbapi.com/"

@@ -72,4 +72,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
+
+    implementation 'com.github.M7mdZain:InternetConnectivityLibrary:v1.2'
+
 }

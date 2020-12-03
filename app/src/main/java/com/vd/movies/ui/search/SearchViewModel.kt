@@ -2,9 +2,8 @@ package com.vd.movies.ui.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.vd.movies.repository.IRepository
-import com.vd.movies.repository.Repository
-import com.vd.movies.repository.model.Movie
+import com.vd.movies.data.repository.IRepository
+import com.vd.movies.data.model.Movie
 import com.vd.movies.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,7 +41,7 @@ class SearchViewModel : BaseViewModel("Search") {
         }
     }
 
-    fun onSearchPressed() {
+    fun onSearchClicked() {
         search(searchKey.value ?: "")
     }
 

@@ -1,4 +1,4 @@
-package com.vd.movies.repository.model
+package com.vd.movies.data.model
 
 import com.google.gson.annotations.SerializedName
 

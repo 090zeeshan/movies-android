@@ -2,16 +2,17 @@ package com.vd.movies.ui.details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.vd.movies.repository.IRepository
-import com.vd.movies.repository.Repository
-import com.vd.movies.repository.model.Movie
+import com.vd.movies.data.repository.IRepository
+import com.vd.movies.data.model.MovieDetail
 import com.vd.movies.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DetailsViewModel() : BaseViewModel("Details") {
     val isLoaderVisible = MutableLiveData(true)
-    val movie = MutableLiveData<Movie>(null)
+    val isContentVisible = MutableLiveData(false)
+    val isNoInternetLblVisible = MutableLiveData(false)
+    val movie = MutableLiveData<MovieDetail?>(null)
 
     fun init(repository: IRepository, imdbId: String) {
         this.repository = repository
@@ -19,7 +20,9 @@ class DetailsViewModel() : BaseViewModel("Details") {
             val result = repository.getMovieByImdbId(imdbId)
             movie.postValue(result)
             isLoaderVisible.postValue(false)
-            title.postValue(result.title + " Details")
+            isContentVisible.postValue(result != null)
+            isNoInternetLblVisible.postValue(result == null)
+            title.postValue(result?.title?:"Movie" + " Details")
         }
     }
 

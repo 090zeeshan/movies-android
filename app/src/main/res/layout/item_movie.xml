@@ -7,7 +7,7 @@
 
         <variable
             name="movie"
-            type="com.vd.movies.repository.model.Movie" />
+            type="com.vd.movies.data.model.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

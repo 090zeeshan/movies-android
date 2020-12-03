@@ -4,9 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.vd.movies.R
 import com.vd.movies.databinding.ItemMovieBinding
-import com.vd.movies.repository.model.Movie
+import com.vd.movies.data.model.Movie
 
 class MoviesAdapter(
     val context: Context,

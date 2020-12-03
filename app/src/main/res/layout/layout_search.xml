@@ -18,6 +18,8 @@
             android:id="@+id/etSearch"
             android:layout_width="0dp"
             android:maxLines="1"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@id/btnSearch"
             app:layout_constraintStart_toStartOf="parent"

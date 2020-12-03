@@ -1,15 +1,11 @@
-package com.vd.movies.repository.api
+package com.vd.movies.data.api
 
-import com.vd.movies.repository.model.Movie
-import com.vd.movies.repository.model.SearchResult
+import com.vd.movies.data.model.Movie
+import com.vd.movies.data.model.MovieDetail
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
 
 
 class Api : IApi {
@@ -44,7 +40,7 @@ class Api : IApi {
         return movies ?: emptyList()
     }
 
-    override suspend fun getMovieByImdbId(imdbId: String): Movie {
+    override suspend fun getMovieByImdbId(imdbId: String): MovieDetail {
         return moviesService.getByImdbId(imdbId)
     }
 }

@@ -1,18 +1,18 @@
 package com.vd.movies.ui.details
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.vd.movies.R
 import com.vd.movies.databinding.FragmentDetailsBinding
-import com.vd.movies.repository.Repository
+import com.vd.movies.data.repository.Repository
+import com.vd.movies.data.api.Api
+import com.vd.movies.data.db.AppDatabase
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
+import com.zain.android.internetconnectivitylibrary.ConnectionUtil
 import kotlinx.android.synthetic.main.fragment_details.*
-import timber.log.Timber
 
 class DetailsFragment : BaseFragment(false) {
     lateinit var viewModel: DetailsViewModel
@@ -23,7 +23,14 @@ class DetailsFragment : BaseFragment(false) {
         viewModel = ViewModelProvider(this).get(DetailsViewModel::class.java)
         arguments?.let {
             val imdbId = DetailsFragmentArgs.fromBundle(it).imdbId
-            viewModel.init(Repository(requireContext()),imdbId)
+            viewModel.init(
+                Repository(
+                    Api(),
+                    AppDatabase.getInstance(requireContext()),
+                    ConnectionUtil(requireContext())
+                ),
+                imdbId
+            )
         }
     }
 

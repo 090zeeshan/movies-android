@@ -21,4 +21,5 @@
     <string name="awards">Awards:</string>
     <string name="imdb_rating">IMDB Rating:</string>
     <string name="rated">Rated:</string>
+    <string name="internet_not_available">Internet not available</string>
 </resources>
