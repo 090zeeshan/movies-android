@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 class ListingViewModel : BaseViewModel() {
     val movies = MutableLiveData(emptyList<Movie>())
     val isLoaderVisible = MutableLiveData(true)
+    val isNotDataLabelVisible = MutableLiveData(false)
+    val isListVisible = MutableLiveData(false)
 
     fun init(repository: IRepository, listingType: ListingType) {
         this.repository = repository
@@ -38,6 +40,8 @@ class ListingViewModel : BaseViewModel() {
             }
             movies.postValue(movieList)
             isLoaderVisible.postValue(false)
+            isNotDataLabelVisible.postValue(movieList.isEmpty())
+            isListVisible.postValue(movieList.isNotEmpty())
         }
     }
 

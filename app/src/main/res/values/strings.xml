@@ -22,4 +22,6 @@
     <string name="imdb_rating">IMDB Rating:</string>
     <string name="rated">Rated:</string>
     <string name="internet_not_available">Internet not available</string>
+    <string name="view_all">View All</string>
+    <string name="no_data_found">No Data Found</string>
 </resources>

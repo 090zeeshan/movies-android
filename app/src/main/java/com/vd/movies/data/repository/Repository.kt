@@ -39,16 +39,16 @@ class Repository(
         db.movieDetailDao().upsert(movie)
     }
 
-    override suspend fun fetchWatchedListMovies(): List<Movie> {
-        return mapMovieDetailsToMovies(db.movieDetailDao().getWatchedList())
+    override suspend fun fetchWatchedListMovies(limit: Int): List<Movie> {
+        return mapMovieDetailsToMovies(db.movieDetailDao().getWatchedList(limit))
     }
 
-    override suspend fun fetchWatchlistMovies(): List<Movie> {
-        return mapMovieDetailsToMovies(db.movieDetailDao().getWatchlist())
+    override suspend fun fetchWatchlistMovies(limit: Int): List<Movie> {
+        return mapMovieDetailsToMovies(db.movieDetailDao().getWatchlist(limit))
     }
 
-    override suspend fun fetchFavoriteMovies(): List<Movie> {
-        return mapMovieDetailsToMovies(db.movieDetailDao().getFavorites())
+    override suspend fun fetchFavoriteMovies(limit: Int): List<Movie> {
+        return mapMovieDetailsToMovies(db.movieDetailDao().getFavorites(limit))
     }
 
     private fun mapMovieDetailsToMovies(movieDetails: List<MovieDetail>): List<Movie> {

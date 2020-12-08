@@ -12,12 +12,12 @@ interface MovieDetailDao {
     @Query("SELECT * FROM movie_details WHERE imdbId = :imdbId")
     fun getByImdbId(imdbId: String): MovieDetail?
 
-    @Query("SELECT * FROM movie_details WHERE isAddedToWatchList = 1")
-    fun getWatchlist(): List<MovieDetail>
+    @Query("SELECT * FROM movie_details WHERE isAddedToWatchList = 1 LIMIT :limit")
+    fun getWatchlist(limit: Int): List<MovieDetail>
 
-    @Query("SELECT * FROM movie_details WHERE isAddedToWatchedList = 1")
-    fun getWatchedList(): List<MovieDetail>
+    @Query("SELECT * FROM movie_details WHERE isAddedToWatchedList = 1 LIMIT :limit")
+    fun getWatchedList(limit: Int): List<MovieDetail>
 
-    @Query("SELECT * FROM movie_details WHERE isAddedToFavorites = 1")
-    fun getFavorites(): List<MovieDetail>
+    @Query("SELECT * FROM movie_details WHERE isAddedToFavorites = 1 LIMIT :limit")
+    fun getFavorites(limit: Int): List<MovieDetail>
 }

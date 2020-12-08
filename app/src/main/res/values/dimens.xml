@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="underTitleInfoMargin">@dimen/_6sdp</dimen>
+    <dimen name="homeListingSize">@dimen/_150sdp</dimen>
+    <dimen name="homeListingMargin">@dimen/_10sdp</dimen>
 </resources>

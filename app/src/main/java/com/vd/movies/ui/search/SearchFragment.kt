@@ -51,7 +51,7 @@ class SearchFragment : BaseFragment(false) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        moviesAdapter = MoviesAdapter(requireContext(), emptyList()) { viewModel.onItemClicked(it) }
+        moviesAdapter = MoviesAdapter(requireContext(), emptyList(), { viewModel.onItemClicked(it) })
         rvResult.adapter = moviesAdapter
         viewModel.moviesList.observe(viewLifecycleOwner, Observer {
             moviesAdapter.list = it
