@@ -1,12 +1,8 @@
-package com.vd.movies.data.model
+package com.vd.movies.data.api.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "movie_details")
-data class MovieDetail(
-    @PrimaryKey
+data class AMovie(
     @SerializedName("imdbID")
     var imdbId: String,
 
@@ -59,9 +55,5 @@ data class MovieDetail(
     var country: String,
 
     @SerializedName("Rated")
-    var rated: String,
-
-    var isAddedToWatchList: Boolean = false,
-    var isAddedToWatchedList: Boolean = false,
-    var isAddedToFavorites: Boolean = false
+    var rated: String
 )

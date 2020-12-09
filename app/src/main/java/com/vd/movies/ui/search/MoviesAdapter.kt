@@ -5,17 +5,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.vd.movies.data.model.Movie
+import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.databinding.ItemMovieRecentBinding
 import com.vd.movies.databinding.ItemMovieResultBinding
 
 class MoviesAdapter(
-    val context: Context,
-    var list: List<Movie>,
-    val onItemClicked: (Movie) -> Unit,
-    val layoutType: LayoutType = LayoutType.RESULT_ITEM
+    private val context: Context,
+    private var list: List<Movie>,
+    private val onItemClicked: (Movie) -> Unit,
+    private val layoutType: LayoutType = LayoutType.RESULT_ITEM
 ) :
     RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+
+    fun setData(list: List<Movie>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = when (layoutType) {

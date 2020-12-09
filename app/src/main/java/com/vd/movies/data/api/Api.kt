@@ -1,7 +1,8 @@
 package com.vd.movies.data.api
 
-import com.vd.movies.data.model.Movie
-import com.vd.movies.data.model.MovieDetail
+import com.vd.movies.data.api.model.AMovie
+import com.vd.movies.data.api.service.MoviesService
+import com.vd.movies.data.api.util.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -35,12 +36,12 @@ class Api : IApi {
         moviesService = retrofit.create(MoviesService::class.java)
     }
 
-    override suspend fun searchMovies(key: String): List<Movie> {
+    override suspend fun searchMovies(key: String): List<AMovie> {
         val movies = moviesService.search(key).movies
         return movies ?: emptyList()
     }
 
-    override suspend fun getMovieByImdbId(imdbId: String): MovieDetail {
+    override suspend fun getMovieByImdbId(imdbId: String): AMovie {
         return moviesService.getByImdbId(imdbId)
     }
 }

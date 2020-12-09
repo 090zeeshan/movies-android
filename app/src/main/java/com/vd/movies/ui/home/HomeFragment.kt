@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.vd.movies.R
 import com.vd.movies.data.api.Api
 import com.vd.movies.data.db.AppDatabase
-import com.vd.movies.data.model.Movie
+import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.databinding.FragmentHomeBinding
 import com.vd.movies.ui.base.BaseFragment
@@ -37,7 +37,6 @@ class HomeFragment : BaseFragment() {
     private val onItemClicked: (movie: Movie) -> Unit = {
         viewModel.onItemClicked(it)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,22 +92,14 @@ class HomeFragment : BaseFragment() {
         layoutWatchlist.rvMovies.adapter = watchlistAdapter
 
         viewModel.recentFavorites.observe(viewLifecycleOwner, Observer {
-            favoritesAdapter.list = it
-            favoritesAdapter.notifyDataSetChanged()
+            favoritesAdapter.setData(it)
         })
         viewModel.recentWatched.observe(viewLifecycleOwner, Observer {
-            watchedAdapter.list = it
-            watchedAdapter.notifyDataSetChanged()
+            watchedAdapter.setData(it)
         })
         viewModel.recentWatchlist.observe(viewLifecycleOwner, Observer {
-            watchlistAdapter.list = it
-            watchlistAdapter.notifyDataSetChanged()
+            watchlistAdapter.setData(it)
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchRecentMovies()
     }
 
     override fun getViewModel(): BaseViewModel? {

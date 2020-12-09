@@ -1,13 +1,14 @@
 package com.vd.movies.data.repository
 
-import com.vd.movies.data.model.Movie
-import com.vd.movies.data.model.MovieDetail
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.vd.movies.data.db.entity.Movie
 
 interface IRepository {
     suspend fun searchMovies(key: String): List<Movie>
-    suspend fun getMovieByImdbId(imdbId: String): MovieDetail?
-    suspend fun updateMovie(movie: MovieDetail)
-    suspend fun fetchWatchedListMovies(limit: Int = -1): List<Movie>
-    suspend fun fetchWatchlistMovies(limit: Int = -1): List<Movie>
-    suspend fun fetchFavoriteMovies(limit: Int = -1): List<Movie>
+    suspend fun getMovieByImdbId(imdbId: String): Movie?
+    suspend fun updateMovie(movie: Movie)
+    fun fetchWatchedListMovies(limit: Int = -1): LiveData<List<Movie>>
+    fun fetchWatchlistMovies(limit: Int = -1): LiveData<List<Movie>>
+    fun fetchFavoriteMovies(limit: Int = -1): LiveData<List<Movie>>
 }

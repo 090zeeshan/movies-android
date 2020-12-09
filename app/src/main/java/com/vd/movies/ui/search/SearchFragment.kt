@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.vd.movies.databinding.FragmentSearchBinding
-import com.vd.movies.data.repository.Repository
 import com.vd.movies.data.api.Api
 import com.vd.movies.data.db.AppDatabase
+import com.vd.movies.data.repository.Repository
+import com.vd.movies.databinding.FragmentSearchBinding
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
 import com.vd.movies.ui.util.onDone
 import com.zain.android.internetconnectivitylibrary.ConnectionUtil
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_search.*
-import timber.log.Timber
 
 class SearchFragment : BaseFragment(false) {
     private lateinit var viewModel: SearchViewModel
@@ -51,12 +50,10 @@ class SearchFragment : BaseFragment(false) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        moviesAdapter = MoviesAdapter(requireContext(), emptyList(), { viewModel.onItemClicked(it) })
+        moviesAdapter =
+            MoviesAdapter(requireContext(), emptyList(), { viewModel.onItemClicked(it) })
         rvResult.adapter = moviesAdapter
-        viewModel.moviesList.observe(viewLifecycleOwner, Observer {
-            moviesAdapter.list = it
-            moviesAdapter.notifyDataSetChanged()
-        })
+        viewModel.moviesList.observe(viewLifecycleOwner, Observer { moviesAdapter.setData(it) })
         btnSearch.setOnClickListener { viewModel.onSearchClicked() }
         etSearch.onDone { viewModel.onSearchClicked() }
     }

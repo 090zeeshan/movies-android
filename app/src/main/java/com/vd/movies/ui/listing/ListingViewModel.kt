@@ -1,18 +1,20 @@
 package com.vd.movies.ui.listing
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.IRepository
-import com.vd.movies.data.model.Movie
 import com.vd.movies.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ListingViewModel : BaseViewModel() {
-    val movies = MutableLiveData(emptyList<Movie>())
+    lateinit var movies: LiveData<List<Movie>>
     val isLoaderVisible = MutableLiveData(true)
     val isNotDataLabelVisible = MutableLiveData(false)
-    val isListVisible = MutableLiveData(false)
+    var isListVisible: LiveData<Boolean> = MutableLiveData(false)
 
     fun init(repository: IRepository, listingType: ListingType) {
         this.repository = repository
@@ -26,22 +28,22 @@ class ListingViewModel : BaseViewModel() {
     }
 
     private fun fetchList(listingType: ListingType) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val movieList = when (listingType) {
-                ListingType.FAVORITES -> {
-                    repository.fetchFavoriteMovies()
-                }
-                ListingType.WATCHED -> {
-                    repository.fetchWatchedListMovies()
-                }
-                ListingType.WATCHLIST -> {
-                    repository.fetchWatchlistMovies()
-                }
+        movies = when (listingType) {
+            ListingType.FAVORITES -> {
+                repository.fetchFavoriteMovies()
             }
-            movies.postValue(movieList)
-            isLoaderVisible.postValue(false)
-            isNotDataLabelVisible.postValue(movieList.isEmpty())
-            isListVisible.postValue(movieList.isNotEmpty())
+            ListingType.WATCHED -> {
+                repository.fetchWatchedListMovies()
+            }
+            ListingType.WATCHLIST -> {
+                repository.fetchWatchlistMovies()
+            }
+        }
+
+        isListVisible  = Transformations.switchMap(movies) {
+            isLoaderVisible.value = false
+            isNotDataLabelVisible.value = it.isEmpty()
+            MutableLiveData<Boolean>( it.isNotEmpty())
         }
     }
 

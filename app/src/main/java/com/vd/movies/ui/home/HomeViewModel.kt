@@ -1,8 +1,8 @@
 package com.vd.movies.ui.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.vd.movies.data.model.Movie
+import androidx.arch.core.util.Function
+import androidx.lifecycle.*
+import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.IRepository
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
@@ -12,31 +12,30 @@ import kotlinx.coroutines.launch
 class HomeViewModel : BaseViewModel("Movies") {
     private val recentCount = 5;
     val searchKey = MutableLiveData("")
-    val recentFavorites = MutableLiveData(emptyList<Movie>())
-    val recentWatched = MutableLiveData(emptyList<Movie>())
-    val recentWatchlist = MutableLiveData(emptyList<Movie>())
-    val isFavsDataAvailable = MutableLiveData(false)
-    val isWatchlistDataAvailable = MutableLiveData(false)
-    val isWatchedListDataAvailable = MutableLiveData(false)
+
+    lateinit var recentFavorites :LiveData<List<Movie>>
+    lateinit var recentWatched : LiveData<List<Movie>>
+    lateinit var recentWatchlist : LiveData<List<Movie>>
+
+    lateinit var isFavsDataAvailable  : LiveData<Boolean>
+    lateinit var isWatchlistDataAvailable : LiveData<Boolean>
+    lateinit var isWatchedListDataAvailable : LiveData<Boolean>
 
     fun init(repository: IRepository){
         this.repository = repository
+
+        recentFavorites = repository.fetchFavoriteMovies(recentCount)
+        isFavsDataAvailable = Transformations.map(recentFavorites) { it.isNotEmpty() }
+
+        recentWatchlist = repository.fetchWatchlistMovies(recentCount)
+        isWatchlistDataAvailable = Transformations.map(recentWatchlist) { it.isNotEmpty() }
+
+        recentWatched = repository.fetchWatchedListMovies(recentCount)
+        isWatchedListDataAvailable = Transformations.map(recentWatched) { it.isNotEmpty() }
     }
 
-    fun fetchRecentMovies(){
-        viewModelScope.launch(Dispatchers.IO) {
-            val favs = repository.fetchFavoriteMovies(recentCount)
-            val watched = repository.fetchWatchedListMovies(recentCount)
-            val watchlist = repository.fetchWatchlistMovies(recentCount)
-
-            recentFavorites.postValue(favs)
-            recentWatched.postValue(watched)
-            recentWatchlist.postValue(watchlist)
-
-            isFavsDataAvailable.postValue(favs.isNotEmpty())
-            isWatchedListDataAvailable.postValue(watched.isNotEmpty())
-            isWatchlistDataAvailable.postValue(watchlist.isNotEmpty())
-        }
+    fun fetchWatchedMovies(): LiveData<List<Movie>> {
+        return recentWatched
     }
 
     fun onSearchClicked() {

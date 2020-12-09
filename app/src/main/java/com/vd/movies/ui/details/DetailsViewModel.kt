@@ -2,8 +2,8 @@ package com.vd.movies.ui.details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.IRepository
-import com.vd.movies.data.model.MovieDetail
 import com.vd.movies.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,7 +12,7 @@ class DetailsViewModel() : BaseViewModel("Details") {
     val isLoaderVisible = MutableLiveData(true)
     val isContentVisible = MutableLiveData(false)
     val isNoInternetLblVisible = MutableLiveData(false)
-    val movie = MutableLiveData<MovieDetail?>(null)
+    val movie = MutableLiveData<Movie?>(null)
 
     fun init(repository: IRepository, imdbId: String) {
         this.repository = repository
@@ -20,16 +20,16 @@ class DetailsViewModel() : BaseViewModel("Details") {
             val result = repository.getMovieByImdbId(imdbId)
             movie.postValue(result)
             isLoaderVisible.postValue(false)
-            isContentVisible.postValue(result != null)
-            isNoInternetLblVisible.postValue(result == null)
-            title.postValue(result?.title?:"Movie" + " Details")
+            isContentVisible.postValue(result?.details != null)
+            isNoInternetLblVisible.postValue(result?.details == null)
+            title.postValue(result?.title ?: "Movie" + " Details")
         }
     }
 
     fun onAddToWatchListPressed() {
         movie.value?.let {
             it.isAddedToWatchList = !it.isAddedToWatchList
-            viewModelScope.launch (Dispatchers.IO){
+            viewModelScope.launch(Dispatchers.IO) {
                 repository.updateMovie(it)
                 movie.postValue(it)
             }
@@ -39,7 +39,7 @@ class DetailsViewModel() : BaseViewModel("Details") {
     fun onAddToWatchedListPressed() {
         movie.value?.let {
             it.isAddedToWatchedList = !it.isAddedToWatchedList
-            viewModelScope.launch (Dispatchers.IO){
+            viewModelScope.launch(Dispatchers.IO) {
                 repository.updateMovie(it)
                 movie.postValue(it)
             }
@@ -49,7 +49,7 @@ class DetailsViewModel() : BaseViewModel("Details") {
     fun onAddToFavoritesPressed() {
         movie.value?.let {
             it.isAddedToFavorites = !it.isAddedToFavorites
-            viewModelScope.launch (Dispatchers.IO){
+            viewModelScope.launch(Dispatchers.IO) {
                 repository.updateMovie(it)
                 movie.postValue(it)
             }

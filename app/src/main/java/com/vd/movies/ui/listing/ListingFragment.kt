@@ -51,8 +51,7 @@ class ListingFragment : BaseFragment() {
         adapter = MoviesAdapter(requireContext(), emptyList(), { viewModel.onItemClicked(it) })
         rvMovies.adapter = adapter
         viewModel.movies.observe(viewLifecycleOwner, Observer {
-            adapter.list = it
-            adapter.notifyDataSetChanged()
+            adapter.setData(it)
         })
     }
 

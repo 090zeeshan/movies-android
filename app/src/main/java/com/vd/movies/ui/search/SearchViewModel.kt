@@ -2,8 +2,8 @@ package com.vd.movies.ui.search
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.IRepository
-import com.vd.movies.data.model.Movie
 import com.vd.movies.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
