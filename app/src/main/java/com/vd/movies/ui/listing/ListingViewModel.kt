@@ -1,24 +1,17 @@
 package com.vd.movies.ui.listing
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.vd.movies.data.db.entity.Movie
-import com.vd.movies.data.repository.IRepository
+import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class ListingViewModel : BaseViewModel() {
+class ListingViewModel(repository: Repository, listingType: ListingType) : BaseViewModel(repository) {
     lateinit var movies: LiveData<List<Movie>>
     val isLoaderVisible = MutableLiveData(true)
     val isNotDataLabelVisible = MutableLiveData(false)
     var isListVisible: LiveData<Boolean> = MutableLiveData(false)
 
-    fun init(repository: IRepository, listingType: ListingType) {
-        this.repository = repository
-
+    init {
         title.value = when (listingType) {
             ListingType.FAVORITES -> "Favorites"
             ListingType.WATCHED -> "Watched List"
@@ -49,5 +42,11 @@ class ListingViewModel : BaseViewModel() {
 
     fun onItemClicked(movie: Movie) {
         navigate(ListingFragmentDirections.actionDetailsFragment(movie.imdbId))
+    }
+
+    class Factory(val repository: Repository, val listingType: ListingType) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return modelClass.getConstructor(Repository::class.java, ListingType::class.java).newInstance(repository, listingType)
+        }
     }
 }

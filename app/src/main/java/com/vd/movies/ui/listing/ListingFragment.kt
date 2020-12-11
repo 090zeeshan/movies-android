@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.vd.movies.data.api.Api
 import com.vd.movies.databinding.FragmentListingBinding
 import com.vd.movies.data.repository.Repository
-import com.vd.movies.data.api.Api
 import com.vd.movies.data.db.AppDatabase
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
@@ -25,15 +25,13 @@ class ListingFragment : BaseFragment() {
         val listingType =
             arguments?.let { ListingFragmentArgs.fromBundle(it).listingType }
                 ?: ListingType.WATCHLIST
-        viewModel = ViewModelProvider(this).get(ListingViewModel::class.java)
-        viewModel.init(
-            Repository(
-                Api(),
-                AppDatabase.getInstance(requireContext()),
-                ConnectionUtil(requireContext())
-            ),
-            listingType
-        )
+        val repository = Repository.Builder(
+            Api.Builder().build(),
+            AppDatabase.getInstance(requireContext()),
+            ConnectionUtil(requireContext())
+        ).build()
+        val factory = ListingViewModel.Factory(repository, listingType)
+        viewModel = ViewModelProvider(this, factory).get(ListingViewModel::class.java)
     }
 
     override fun onCreateView(

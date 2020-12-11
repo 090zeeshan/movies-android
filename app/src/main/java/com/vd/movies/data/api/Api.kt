@@ -8,8 +8,18 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+interface Api {
+    suspend fun searchMovies(key: String): List<AMovie>
+    suspend fun getMovieByImdbId(imdbId: String): AMovie
 
-class Api : IApi {
+    class Builder(){
+        fun build(): Api{
+            return ApiImp()
+        }
+    }
+}
+
+private class ApiImp : Api {
     private val moviesService: MoviesService
 
     init {

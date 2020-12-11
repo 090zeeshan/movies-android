@@ -1,16 +1,11 @@
 package com.vd.movies.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.vd.movies.R
 import com.vd.movies.data.api.Api
 import com.vd.movies.data.db.AppDatabase
 import com.vd.movies.data.db.entity.Movie
@@ -21,13 +16,10 @@ import com.vd.movies.ui.base.BaseViewModel
 import com.vd.movies.ui.search.MoviesAdapter
 import com.vd.movies.ui.util.onDone
 import com.zain.android.internetconnectivitylibrary.ConnectionUtil
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_listing.view.*
 import kotlinx.android.synthetic.main.fragment_listing.view.rvMovies
 import kotlinx.android.synthetic.main.layout_recents_home.view.*
 import kotlinx.android.synthetic.main.layout_search.*
-import timber.log.Timber
 
 class HomeFragment : BaseFragment() {
     private lateinit var viewModel: HomeViewModel
@@ -40,14 +32,13 @@ class HomeFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        viewModel.init(
-            Repository(
-                Api(),
-                AppDatabase.getInstance(requireContext()),
-                ConnectionUtil(requireContext())
-            )
-        )
+        val repository = Repository.Builder(
+            Api.Builder().build(),
+            AppDatabase.getInstance(requireContext()),
+            ConnectionUtil(requireContext())
+        ).build()
+        val factory = HomeViewModel.Factory(repository)
+        viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
     }
 
     override fun onCreateView(

@@ -1,21 +1,22 @@
 package com.vd.movies.ui.details
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.vd.movies.data.db.entity.Movie
-import com.vd.movies.data.repository.IRepository
+import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailsViewModel() : BaseViewModel("Details") {
+class DetailsViewModel(repository: Repository, imdbId: String) : BaseViewModel(repository,"Details") {
     val isLoaderVisible = MutableLiveData(true)
     val isContentVisible = MutableLiveData(false)
     val isNoInternetLblVisible = MutableLiveData(false)
     val movie = MutableLiveData<Movie?>(null)
 
-    fun init(repository: IRepository, imdbId: String) {
-        this.repository = repository
+    init{
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getMovieByImdbId(imdbId)
             movie.postValue(result)
@@ -55,4 +56,11 @@ class DetailsViewModel() : BaseViewModel("Details") {
             }
         }
     }
+
+    class Factory(val repository: Repository, val imdbId: String) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return modelClass.getConstructor(Repository::class.java, String::class.java).newInstance(repository, imdbId)
+        }
+    }
+
 }

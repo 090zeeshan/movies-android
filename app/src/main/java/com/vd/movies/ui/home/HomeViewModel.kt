@@ -1,29 +1,23 @@
 package com.vd.movies.ui.home
 
-import androidx.arch.core.util.Function
 import androidx.lifecycle.*
 import com.vd.movies.data.db.entity.Movie
-import com.vd.movies.data.repository.IRepository
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class HomeViewModel : BaseViewModel("Movies") {
+class HomeViewModel(repository: Repository) : BaseViewModel(repository,"Movies") {
     private val recentCount = 5;
     val searchKey = MutableLiveData("")
 
-    lateinit var recentFavorites :LiveData<List<Movie>>
-    lateinit var recentWatched : LiveData<List<Movie>>
-    lateinit var recentWatchlist : LiveData<List<Movie>>
+    var recentFavorites: LiveData<List<Movie>>
+    var recentWatched: LiveData<List<Movie>>
+    var recentWatchlist: LiveData<List<Movie>>
 
-    lateinit var isFavsDataAvailable  : LiveData<Boolean>
-    lateinit var isWatchlistDataAvailable : LiveData<Boolean>
-    lateinit var isWatchedListDataAvailable : LiveData<Boolean>
+    var isFavsDataAvailable: LiveData<Boolean>
+    var isWatchlistDataAvailable: LiveData<Boolean>
+    var isWatchedListDataAvailable: LiveData<Boolean>
 
-    fun init(repository: IRepository){
-        this.repository = repository
-
+    init {
         recentFavorites = repository.fetchFavoriteMovies(recentCount)
         isFavsDataAvailable = Transformations.map(recentFavorites) { it.isNotEmpty() }
 
@@ -32,10 +26,6 @@ class HomeViewModel : BaseViewModel("Movies") {
 
         recentWatched = repository.fetchWatchedListMovies(recentCount)
         isWatchedListDataAvailable = Transformations.map(recentWatched) { it.isNotEmpty() }
-    }
-
-    fun fetchWatchedMovies(): LiveData<List<Movie>> {
-        return recentWatched
     }
 
     fun onSearchClicked() {
@@ -57,6 +47,12 @@ class HomeViewModel : BaseViewModel("Movies") {
 
     fun onViewAllWatchedListClicked() {
         navigate(HomeFragmentDirections.actionWatchListFragment())
+    }
+
+    class Factory(val repository: Repository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return modelClass.getConstructor(Repository::class.java).newInstance(repository)
+        }
     }
 
 }

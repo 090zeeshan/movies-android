@@ -1,18 +1,33 @@
 package com.vd.movies.data.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.vd.movies.data.api.IApi
+import com.vd.movies.data.api.Api
 import com.vd.movies.data.api.model.AMovie
 import com.vd.movies.data.db.AppDatabase
 import com.vd.movies.data.db.entity.Movie
 import com.zain.android.internetconnectivitylibrary.ConnectionUtil
 
-class Repository(
-    val api: IApi,
+interface Repository {
+    suspend fun searchMovies(key: String): List<Movie>
+    suspend fun getMovieByImdbId(imdbId: String): Movie?
+    suspend fun updateMovie(movie: Movie)
+    fun fetchWatchedListMovies(limit: Int = -1): LiveData<List<Movie>>
+    fun fetchWatchlistMovies(limit: Int = -1): LiveData<List<Movie>>
+    fun fetchFavoriteMovies(limit: Int = -1): LiveData<List<Movie>>
+
+    class Builder(val api: Api, val db: AppDatabase, val connectionUtil: ConnectionUtil){
+        fun build(): Repository{
+            return RepositoryImp(api, db, connectionUtil)
+        }
+    }
+}
+
+
+private class RepositoryImp(
+    val api: Api,
     val db: AppDatabase,
     val connectionUtil: ConnectionUtil
-) : IRepository {
+) : Repository {
 
     override suspend fun searchMovies(key: String): List<Movie> {
         if (!connectionUtil.isOnline) {

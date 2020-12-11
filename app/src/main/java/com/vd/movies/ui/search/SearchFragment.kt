@@ -25,15 +25,13 @@ class SearchFragment : BaseFragment(false) {
         super.onCreate(savedInstanceState)
 
         val searchKey = arguments?.let { SearchFragmentArgs.fromBundle(it).searchKey } ?: ""
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-        viewModel.init(
-            Repository(
-                Api(),
-                AppDatabase.getInstance(requireContext()),
-                ConnectionUtil(requireContext())
-            ),
-            searchKey
-        )
+        val repository = Repository.Builder(
+            Api.Builder().build(),
+            AppDatabase.getInstance(requireContext()),
+            ConnectionUtil(requireContext())
+        ).build()
+        val factory = SearchViewModel.Factory(repository, searchKey)
+        viewModel = ViewModelProvider(this, factory).get(SearchViewModel::class.java)
     }
 
     override fun onCreateView(
