@@ -1,23 +1,29 @@
 package com.vd.movies.ui.details
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
+import com.vd.movies.ui.webview.WebViewFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
-class DetailsViewModel(repository: Repository, imdbId: String) : BaseViewModel(repository,"Details") {
+class DetailsViewModel(repository: Repository, val imdbId: String) :
+    BaseViewModel(repository, "Details") {
     val isLoaderVisible = MutableLiveData(true)
     val isContentVisible = MutableLiveData(false)
     val isNoInternetLblVisible = MutableLiveData(false)
     val movie = MutableLiveData<Movie?>(null)
 
-    init{
+    init {
         viewModelScope.launch(Dispatchers.IO) {
+            Log.i("DetailsViewModel", imdbId);
             val result = repository.getMovieByImdbId(imdbId)
             movie.postValue(result)
             isLoaderVisible.postValue(false)
@@ -57,9 +63,16 @@ class DetailsViewModel(repository: Repository, imdbId: String) : BaseViewModel(r
         }
     }
 
+    fun onViewOnImdbPressed() {
+        val url = "https://www.imdb.com/title/${imdbId}"
+        Log.i("URL", url);
+        navigate(DetailsFragmentDirections.actionOpenImdb(url))
+    }
+
     class Factory(val repository: Repository, val imdbId: String) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor(Repository::class.java, String::class.java).newInstance(repository, imdbId)
+            return modelClass.getConstructor(Repository::class.java, String::class.java)
+                .newInstance(repository, imdbId)
         }
     }
 

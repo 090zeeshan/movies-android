@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
         <shape android:shape="rectangle">
-            <size android:width="70dp" android:height="50dp"/>
-            <stroke android:width="2dp" android:color="@android:color/darker_gray"/>
-            <corners android:radius="10dp"/>
+            <corners android:radius="11dp" />
+            <gradient
+                android:angle="270"
+                android:centerColor="@android:color/darker_gray"
+                android:centerX="0.5"
+                android:centerY="0.92"
+                android:endColor="#FFFFFF"
+                android:startColor="@android:color/darker_gray" />
         </shape>
     </item>
-</selector>
+
+    <item
+        android:bottom="8dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp">
+        <selector>
+            <item
+                android:bottom="8dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:state_pressed="true"
+                android:top="1dp">
+                <shape android:shape="rectangle">
+                    <size
+                        android:width="70dp"
+                        android:height="50dp" />
+                    <corners android:radius="10dp" />
+                    <solid android:color="@color/floralWhiteDark" />
+                </shape>
+            </item>
+
+            <item>
+                <shape android:shape="rectangle">
+                    <size
+                        android:width="70dp"
+                        android:height="50dp" />
+                    <corners android:radius="10dp" />
+                    <solid android:color="@color/floralWhite" />
+                </shape>
+
+            </item>
+        </selector>
+    </item>
+
+</layer-list>

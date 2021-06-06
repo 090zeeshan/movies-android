@@ -48,6 +48,7 @@ class DetailsFragment : BaseFragment(false) {
         btnWatchList.setOnClickListener { viewModel.onAddToWatchListPressed() }
         btnWatched.setOnClickListener { viewModel.onAddToWatchedListPressed() }
         btnFavorite.setOnClickListener { viewModel.onAddToFavoritesPressed() }
+        btnImdb.setOnClickListener { viewModel.onViewOnImdbPressed() }
     }
 
     override fun getViewModel(): BaseViewModel? {

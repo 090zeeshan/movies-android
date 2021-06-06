@@ -12,14 +12,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/_4sdp">
 
-        <ScrollView
+        <LinearLayout
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             app:isVisible="@{viewModel.contentVisible}"
-            app:layout_constraintBottom_toTopOf="@id/btnWatchList"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:context=".ui.details.DetailsFragment">
@@ -27,7 +28,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_4sdp">
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/bg_recent_movies"
+                android:padding="@dimen/_8sdp">
 
                 <ImageView
                     android:id="@+id/ivThumbnail"
@@ -162,187 +165,222 @@
                     app:layout_constraintStart_toEndOf="@id/tvDirectorLbl"
                     app:layout_constraintTop_toBottomOf="@id/tvWriter"
                     tools:text="Tony Mark" />
-
-                <TextView
-                    android:id="@+id/tvSummary"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:text="@{viewModel.movie.details.plot}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDirector" />
-
-                <TextView
-                    android:id="@+id/tvActorsLbl"
-                    style="@style/DetailInfoLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/actors"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvSummary" />
-
-                <TextView
-                    android:id="@+id/tvActors"
-                    style="@style/DetailInfo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.movie.details.actors}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tvActorsLbl"
-                    app:layout_constraintTop_toBottomOf="@id/tvSummary"
-                    tools:text="Tony Mark" />
-
-                <TextView
-                    android:id="@+id/tvRatedLbl"
-                    style="@style/DetailInfoLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rated"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvActors" />
-
-                <TextView
-                    style="@style/DetailInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.movie.details.rated}"
-                    app:layout_constraintStart_toEndOf="@id/tvRatedLbl"
-                    app:layout_constraintTop_toBottomOf="@id/tvActors"
-                    tools:text="Tony Mark" />
-
-                <TextView
-                    android:id="@+id/tvReleaseDateLbl"
-                    style="@style/DetailInfoLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/release_date"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvRatedLbl" />
-
-                <TextView
-                    style="@style/DetailInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.movie.details.released}"
-                    app:layout_constraintStart_toEndOf="@id/tvReleaseDateLbl"
-                    app:layout_constraintTop_toBottomOf="@id/tvRatedLbl"
-                    tools:text="Tony Mark" />
-
-                <TextView
-                    android:id="@+id/tvLanguageLbl"
-                    style="@style/DetailInfoLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/language"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvReleaseDateLbl" />
-
-                <TextView
-                    android:id="@+id/tvLanguage"
-                    style="@style/DetailInfo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.movie.details.language}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tvLanguageLbl"
-                    app:layout_constraintTop_toBottomOf="@id/tvReleaseDateLbl"
-                    tools:text="English" />
-
-                <TextView
-                    android:id="@+id/tvCountryLbl"
-                    style="@style/DetailInfoLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/country"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvLanguage" />
-
-                <TextView
-                    android:id="@+id/tvCountry"
-                    style="@style/DetailInfo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.movie.details.country}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tvCountryLbl"
-                    app:layout_constraintTop_toBottomOf="@id/tvLanguage"
-                    tools:text="USA" />
-
-                <TextView
-                    android:id="@+id/tvProductionLbl"
-                    style="@style/DetailInfoLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/production"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvCountry" />
-
-                <TextView
-                    style="@style/DetailInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.movie.details.production}"
-                    app:layout_constraintStart_toEndOf="@id/tvProductionLbl"
-                    app:layout_constraintTop_toBottomOf="@id/tvCountry"
-                    tools:text="ABC Country" />
-
-                <TextView
-                    android:id="@+id/tvAwardsLbl"
-                    style="@style/DetailInfoLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/awards"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvProductionLbl" />
-
-                <TextView
-                    style="@style/DetailInfo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.movie.details.awards}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tvAwardsLbl"
-                    app:layout_constraintTop_toBottomOf="@id/tvProductionLbl"
-                    tools:text="Oscar" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
 
-        <Button
-            android:id="@+id/btnWatchList"
-            style="@style/DetailsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.movie.addedToWatchList? `Added to Watchlist` : `Add to Watchlist`}"
-            app:isVisible="@{viewModel.contentVisible}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnWatched"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Add to Watchlist" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:background="@drawable/bg_recent_movies"
+                android:fadeScrollbars="false"
+                android:scrollbars="vertical">
 
-        <Button
-            android:id="@+id/btnWatched"
-            style="@style/DetailsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.movie.addedToWatchedList? `Added to Watched List` : `Add to Watched List`}"
-            app:isVisible="@{viewModel.contentVisible}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/btnFavorite"
-            app:layout_constraintStart_toEndOf="@id/btnWatchList"
-            tools:text="Add to Watched List" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_4sdp">
 
-        <Button
-            android:id="@+id/btnFavorite"
-            style="@style/DetailsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.movie.addedToFavorites? `Added to Favorites` : `Add to Favorites`}"
-            app:isVisible="@{viewModel.contentVisible}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btnWatched"
-            tools:text="Add to Favorites" />
+                    <TextView
+                        android:id="@+id/tvSummary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="@{viewModel.movie.details.plot}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvActorsLbl"
+                        style="@style/DetailInfoLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/actors"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvSummary" />
+
+                    <TextView
+                        android:id="@+id/tvActors"
+                        style="@style/DetailInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.movie.details.actors}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvActorsLbl"
+                        app:layout_constraintTop_toBottomOf="@id/tvSummary"
+                        tools:text="Tony Mark" />
+
+                    <TextView
+                        android:id="@+id/tvRatedLbl"
+                        style="@style/DetailInfoLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rated"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvActors" />
+
+                    <TextView
+                        style="@style/DetailInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.movie.details.rated}"
+                        app:layout_constraintStart_toEndOf="@id/tvRatedLbl"
+                        app:layout_constraintTop_toBottomOf="@id/tvActors"
+                        tools:text="Tony Mark" />
+
+                    <TextView
+                        android:id="@+id/tvReleaseDateLbl"
+                        style="@style/DetailInfoLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/release_date"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvRatedLbl" />
+
+                    <TextView
+                        style="@style/DetailInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.movie.details.released}"
+                        app:layout_constraintStart_toEndOf="@id/tvReleaseDateLbl"
+                        app:layout_constraintTop_toBottomOf="@id/tvRatedLbl"
+                        tools:text="Tony Mark" />
+
+                    <TextView
+                        android:id="@+id/tvLanguageLbl"
+                        style="@style/DetailInfoLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/language"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvReleaseDateLbl" />
+
+                    <TextView
+                        android:id="@+id/tvLanguage"
+                        style="@style/DetailInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.movie.details.language}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvLanguageLbl"
+                        app:layout_constraintTop_toBottomOf="@id/tvReleaseDateLbl"
+                        tools:text="English" />
+
+                    <TextView
+                        android:id="@+id/tvCountryLbl"
+                        style="@style/DetailInfoLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/country"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvLanguage" />
+
+                    <TextView
+                        android:id="@+id/tvCountry"
+                        style="@style/DetailInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.movie.details.country}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvCountryLbl"
+                        app:layout_constraintTop_toBottomOf="@id/tvLanguage"
+                        tools:text="USA" />
+
+                    <TextView
+                        android:id="@+id/tvProductionLbl"
+                        style="@style/DetailInfoLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/production"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvCountry" />
+
+                    <TextView
+                        style="@style/DetailInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.movie.details.production}"
+                        app:layout_constraintStart_toEndOf="@id/tvProductionLbl"
+                        app:layout_constraintTop_toBottomOf="@id/tvCountry"
+                        tools:text="ABC Country" />
+
+                    <TextView
+                        android:id="@+id/tvAwardsLbl"
+                        style="@style/DetailInfoLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/awards"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvProductionLbl" />
+
+                    <TextView
+                        style="@style/DetailInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.movie.details.awards}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvAwardsLbl"
+                        app:layout_constraintTop_toBottomOf="@id/tvProductionLbl"
+                        tools:text="Oscar" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnWatchList"
+                    style="@style/DetailsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.movie.addedToWatchList? `Added to \nWatchlist` : `Add to \nWatchlist`}"
+                    app:isVisible="@{viewModel.contentVisible}"
+                    app:layout_constraintEnd_toStartOf="@id/btnWatched"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Add to Watchlist" />
+
+                <Button
+                    android:id="@+id/btnWatched"
+                    style="@style/DetailsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.movie.addedToWatchedList? `Added to \nWatched List` : `Add to \nWatched List`}"
+                    app:isVisible="@{viewModel.contentVisible}"
+                    app:layout_constraintEnd_toEndOf="@id/btnFavorite"
+                    app:layout_constraintStart_toEndOf="@id/btnWatchList"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Add to Watched List" />
+
+                <Button
+                    android:id="@+id/btnFavorite"
+                    style="@style/DetailsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.movie.addedToFavorites? `Added to \nFavorites` : `Add to \nFavorites`}"
+                    app:isVisible="@{viewModel.contentVisible}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btnWatched"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Add to Favorites" />
+
+
+                <Button
+                    android:id="@+id/btnImdb"
+                    style="@style/DetailsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/watch_trailer_on_imdb"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnFavorite" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -362,5 +400,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="searchKey"
             type="String" />
@@ -13,28 +14,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:text="@={searchKey}"
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSearch"
             android:layout_width="0dp"
-            android:maxLines="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:drawableStart="@drawable/baseline_search_gray_24dp"
+            android:hint="@string/search"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@={searchKey}"
             app:layout_constraintEnd_toStartOf="@id/btnSearch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageView
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:src="@drawable/baseline_search_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@id/etSearch"
+            android:layout_marginVertical="@dimen/_4sdp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/btn_search"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/btn_search_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/etSearch"
-            app:layout_constraintTop_toTopOf="@id/etSearch" />
-
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

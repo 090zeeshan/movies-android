@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:background="@drawable/bg_recent_movies"
-        android:padding="@dimen/_4sdp"
+        android:padding="@dimen/_8sdp"
         android:layout_height="match_parent">
 
         <TextView

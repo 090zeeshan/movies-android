@@ -39,6 +39,10 @@
         <argument
             android:name="imdbId"
             app:argType="string" />
+
+        <action
+            android:id="@+id/actionOpenImdb"
+            app:destination="@id/webviewFragment" />
     </fragment>
 
     <fragment
@@ -104,4 +108,15 @@
             android:id="@+id/actionDetailsFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/webviewFragment"
+        android:name="com.vd.movies.ui.webview.WebViewFragment"
+        android:label="webview_fragment">
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+
 </navigation>
