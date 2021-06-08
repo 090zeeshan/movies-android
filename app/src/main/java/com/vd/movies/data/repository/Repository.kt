@@ -6,6 +6,10 @@ import com.vd.movies.data.api.model.AMovie
 import com.vd.movies.data.db.AppDatabase
 import com.vd.movies.data.db.entity.Movie
 import com.zain.android.internetconnectivitylibrary.ConnectionUtil
+import dagger.Provides
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 
 interface Repository {
     suspend fun searchMovies(key: String): List<Movie>
@@ -15,8 +19,8 @@ interface Repository {
     fun fetchWatchlistMovies(limit: Int = -1): LiveData<List<Movie>>
     fun fetchFavoriteMovies(limit: Int = -1): LiveData<List<Movie>>
 
-    class Builder(val api: Api, val db: AppDatabase, val connectionUtil: ConnectionUtil){
-        fun build(): Repository{
+    class Builder(val api: Api, val db: AppDatabase, val connectionUtil: ConnectionUtil) {
+        fun build(): Repository {
             return RepositoryImp(api, db, connectionUtil)
         }
     }
@@ -63,11 +67,11 @@ private class RepositoryImp(
         return db.movieDao().getWatchedList(limit)
     }
 
-    override  fun fetchWatchlistMovies(limit: Int): LiveData<List<Movie>> {
+    override fun fetchWatchlistMovies(limit: Int): LiveData<List<Movie>> {
         return db.movieDao().getWatchlist(limit)
     }
 
-    override  fun fetchFavoriteMovies(limit: Int): LiveData<List<Movie>> {
+    override fun fetchFavoriteMovies(limit: Int): LiveData<List<Movie>> {
         return db.movieDao().getFavorites(limit)
     }
 
@@ -98,5 +102,15 @@ private class RepositoryImp(
                 aMovie.rated
             )
         )
+    }
+
+    @EntryPoint
+    @InstallIn(ActivityComponent::class)
+    interface RepositoryEntryPoint {
+
+//        @Provides
+//        fun providesRepo(): Repository{
+////            Repository.Builder(AppDatabase.getInstance()).build()
+//        }
     }
 }
