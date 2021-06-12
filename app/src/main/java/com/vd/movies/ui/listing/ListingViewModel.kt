@@ -1,15 +1,20 @@
 package com.vd.movies.ui.listing
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ListingViewModel(repository: Repository, listingType: ListingType) : BaseViewModel(repository) {
+@HiltViewModel
+class ListingViewModel @Inject constructor(repository: Repository, handle: SavedStateHandle) : BaseViewModel(repository) {
     lateinit var movies: LiveData<List<Movie>>
     val isLoaderVisible = MutableLiveData(true)
     val isNotDataLabelVisible = MutableLiveData(false)
     var isListVisible: LiveData<Boolean> = MutableLiveData(false)
+    val listingType = handle["listingType"]?: ListingType.FAVORITES
 
     init {
         title.value = when (listingType) {
@@ -44,9 +49,9 @@ class ListingViewModel(repository: Repository, listingType: ListingType) : BaseV
         navigate(ListingFragmentDirections.actionDetailsFragment(movie.imdbId))
     }
 
-    class Factory(val repository: Repository, val listingType: ListingType) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor(Repository::class.java, ListingType::class.java).newInstance(repository, listingType)
-        }
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("LVM", "onCleared")
     }
+
 }

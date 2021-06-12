@@ -5,11 +5,8 @@ import com.vd.movies.data.api.Api
 import com.vd.movies.data.api.model.AMovie
 import com.vd.movies.data.db.AppDatabase
 import com.vd.movies.data.db.entity.Movie
-import com.zain.android.internetconnectivitylibrary.ConnectionUtil
-import dagger.Provides
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import com.vd.movies.ui.util.NetworkUtil
+import javax.inject.Inject
 
 interface Repository {
     suspend fun searchMovies(key: String): List<Movie>
@@ -18,23 +15,16 @@ interface Repository {
     fun fetchWatchedListMovies(limit: Int = -1): LiveData<List<Movie>>
     fun fetchWatchlistMovies(limit: Int = -1): LiveData<List<Movie>>
     fun fetchFavoriteMovies(limit: Int = -1): LiveData<List<Movie>>
-
-    class Builder(val api: Api, val db: AppDatabase, val connectionUtil: ConnectionUtil) {
-        fun build(): Repository {
-            return RepositoryImp(api, db, connectionUtil)
-        }
-    }
 }
 
-
-private class RepositoryImp(
-    val api: Api,
-    val db: AppDatabase,
-    val connectionUtil: ConnectionUtil
+ class RepositoryImp @Inject constructor(
+     private val api: Api,
+     private val db: AppDatabase,
+     private val networkUtil: NetworkUtil
 ) : Repository {
 
     override suspend fun searchMovies(key: String): List<Movie> {
-        if (!connectionUtil.isOnline) {
+        if (!networkUtil.isOnline()) {
             return db.movieDao().searchByTitle(key)
         }
 
@@ -46,7 +36,7 @@ private class RepositoryImp(
 
     override suspend fun getMovieByImdbId(imdbId: String): Movie? {
         var result = db.movieDao().getByImdbId(imdbId)
-        if (!connectionUtil.isOnline) {
+        if (!networkUtil.isOnline()) {
             return result
         }
 
@@ -102,15 +92,5 @@ private class RepositoryImp(
                 aMovie.rated
             )
         )
-    }
-
-    @EntryPoint
-    @InstallIn(ActivityComponent::class)
-    interface RepositoryEntryPoint {
-
-//        @Provides
-//        fun providesRepo(): Repository{
-////            Repository.Builder(AppDatabase.getInstance()).build()
-//        }
     }
 }

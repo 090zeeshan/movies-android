@@ -1,7 +1,6 @@
 package com.vd.movies.ui.webview
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -9,11 +8,8 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.vd.movies.R
+import androidx.fragment.app.Fragment
 import com.vd.movies.databinding.FragmentWebViewBinding
-import com.vd.movies.ui.home.HomeFragment
-import com.vd.movies.ui.listing.ListingFragment
-import com.vd.movies.ui.listing.ListingFragmentArgs
 
 class WebViewFragment : Fragment() {
 
@@ -22,7 +18,6 @@ class WebViewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         mUrl = arguments?.let { WebViewFragmentArgs.fromBundle(it).url } ?: "";
     }
 

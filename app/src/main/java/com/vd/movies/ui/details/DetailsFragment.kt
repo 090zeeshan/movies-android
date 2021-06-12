@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.vd.movies.data.api.Api
 import com.vd.movies.databinding.FragmentDetailsBinding
@@ -11,25 +12,13 @@ import com.vd.movies.data.repository.Repository
 import com.vd.movies.data.db.AppDatabase
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
-import com.zain.android.internetconnectivitylibrary.ConnectionUtil
+import com.vd.movies.ui.util.NetworkUtilImp
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_details.*
 
+@AndroidEntryPoint
 class DetailsFragment : BaseFragment(false) {
-    lateinit var viewModel: DetailsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-        val imdbId = arguments?.let { DetailsFragmentArgs.fromBundle(it).imdbId } ?: ""
-        val repository = Repository.Builder(
-            Api.Builder().build(),
-            AppDatabase.getInstance(requireContext()),
-            ConnectionUtil(requireContext())
-        ).build()
-        val factory = DetailsViewModel.Factory(repository, imdbId)
-        viewModel = ViewModelProvider(this, factory).get(DetailsViewModel::class.java)
-    }
+    private val viewModel: DetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

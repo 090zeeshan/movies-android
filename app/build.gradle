@@ -75,11 +75,11 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
 
-    implementation 'com.github.M7mdZain:InternetConnectivityLibrary:v1.2'
-
-
-    def hilt_version = "2.28-alpha"
+    def hilt_version = "2.37"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+
 
 }

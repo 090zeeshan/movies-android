@@ -1,9 +1,11 @@
 package com.vd.movies.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.vd.movies.data.api.Api
@@ -14,15 +16,19 @@ import com.vd.movies.databinding.FragmentHomeBinding
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
 import com.vd.movies.ui.search.MoviesAdapter
+import com.vd.movies.ui.util.NetworkUtilImp
 import com.vd.movies.ui.util.onDone
-import com.zain.android.internetconnectivitylibrary.ConnectionUtil
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_listing.view.rvMovies
 import kotlinx.android.synthetic.main.layout_recents_home.view.*
 import kotlinx.android.synthetic.main.layout_search.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment() {
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var favoritesAdapter: MoviesAdapter
     private lateinit var watchedAdapter: MoviesAdapter
     private lateinit var watchlistAdapter: MoviesAdapter
@@ -30,21 +36,12 @@ class HomeFragment : BaseFragment() {
         viewModel.onItemClicked(it)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val repository = Repository.Builder(
-            Api.Builder().build(),
-            AppDatabase.getInstance(requireContext()),
-            ConnectionUtil(requireContext())
-        ).build()
-        val factory = HomeViewModel.Factory(repository)
-        viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i("HF", "onCreateView")
+
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -52,6 +49,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.i("HF", "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         btnSearch.setOnClickListener { viewModel.onSearchClicked() }
         etSearch.onDone { viewModel.onSearchClicked() }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.vd.movies.data.api.Api
@@ -12,27 +13,16 @@ import com.vd.movies.data.repository.Repository
 import com.vd.movies.databinding.FragmentSearchBinding
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
+import com.vd.movies.ui.util.NetworkUtilImp
 import com.vd.movies.ui.util.onDone
-import com.zain.android.internetconnectivitylibrary.ConnectionUtil
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_search.*
 
+@AndroidEntryPoint
 class SearchFragment : BaseFragment(false) {
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by viewModels()
     private lateinit var moviesAdapter: MoviesAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val searchKey = arguments?.let { SearchFragmentArgs.fromBundle(it).searchKey } ?: ""
-        val repository = Repository.Builder(
-            Api.Builder().build(),
-            AppDatabase.getInstance(requireContext()),
-            ConnectionUtil(requireContext())
-        ).build()
-        val factory = SearchViewModel.Factory(repository, searchKey)
-        viewModel = ViewModelProvider(this, factory).get(SearchViewModel::class.java)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

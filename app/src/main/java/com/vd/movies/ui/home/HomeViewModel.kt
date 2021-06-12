@@ -4,8 +4,12 @@ import androidx.lifecycle.*
 import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel(repository: Repository) : BaseViewModel(repository,"Movies") {
+@HiltViewModel
+class HomeViewModel @Inject constructor(repository: Repository) : BaseViewModel(repository,"Movies") {
     private val recentCount = 5;
     val searchKey = MutableLiveData("")
 
@@ -46,13 +50,7 @@ class HomeViewModel(repository: Repository) : BaseViewModel(repository,"Movies")
     }
 
     fun onViewAllWatchedListClicked() {
-        navigate(HomeFragmentDirections.actionWatchListFragment())
-    }
-
-    class Factory(val repository: Repository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor(Repository::class.java).newInstance(repository)
-        }
+        navigate(HomeFragmentDirections.actionWatchedFragment())
     }
 
 }

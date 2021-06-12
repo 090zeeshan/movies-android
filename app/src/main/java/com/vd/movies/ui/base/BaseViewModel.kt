@@ -7,7 +7,10 @@ import com.vd.movies.data.repository.Repository
 import com.vd.movies.navigation.NavigationCommand
 import com.vd.movies.ui.util.Event
 
-open class BaseViewModel(val repository: Repository, title: String = "") : ViewModel() {
+open class BaseViewModel(val repository: Repository, title: String) : ViewModel() {
+
+    constructor(repository: Repository): this(repository, "")
+
     val title = MutableLiveData(title)
     val navigationCommand = MutableLiveData<Event<NavigationCommand>>(null)
 

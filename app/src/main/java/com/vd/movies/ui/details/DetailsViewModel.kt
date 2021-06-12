@@ -1,25 +1,26 @@
 package com.vd.movies.ui.details
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.navigation.NavDirections
 import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
 import com.vd.movies.ui.webview.WebViewFragment
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
-class DetailsViewModel(repository: Repository, val imdbId: String) :
+@HiltViewModel
+class DetailsViewModel @Inject constructor(repository: Repository, handle: SavedStateHandle) :
     BaseViewModel(repository, "Details") {
     val isLoaderVisible = MutableLiveData(true)
     val isContentVisible = MutableLiveData(false)
     val isNoInternetLblVisible = MutableLiveData(false)
     val movie = MutableLiveData<Movie?>(null)
+    val imdbId = handle.get("imdbId")?:""
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -67,13 +68,6 @@ class DetailsViewModel(repository: Repository, val imdbId: String) :
         val url = "https://www.imdb.com/title/${imdbId}"
         Log.i("URL", url);
         navigate(DetailsFragmentDirections.actionOpenImdb(url))
-    }
-
-    class Factory(val repository: Repository, val imdbId: String) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor(Repository::class.java, String::class.java)
-                .newInstance(repository, imdbId)
-        }
     }
 
 }

@@ -1,24 +1,28 @@
 package com.vd.movies.ui.search
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel(repository: Repository, searchKey: String) : BaseViewModel(repository,"Search") {
-    val searchKey = MutableLiveData<String>(searchKey)
+@HiltViewModel
+class SearchViewModel @Inject constructor(repository: Repository, handle: SavedStateHandle) :
+    BaseViewModel(repository, "Search") {
+    val searchKey = MutableLiveData<String>(handle["searchKey"])
     val moviesList = MutableLiveData<List<Movie>>(emptyList())
     val isLoaderVisible = MutableLiveData(false)
     val isNoDataLabelVisible = MutableLiveData(false)
     val isListVisible = MutableLiveData(false)
 
     init {
-        search(searchKey)
+        search(searchKey.value ?: "")
     }
 
     fun search(key: String) {
@@ -49,9 +53,4 @@ class SearchViewModel(repository: Repository, searchKey: String) : BaseViewModel
         navigate(SearchFragmentDirections.actionDetailsFragment(movie.imdbId))
     }
 
-    class Factory(val repository: Repository, val searchKey: String) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor(Repository::class.java, String::class.java).newInstance(repository, searchKey)
-        }
-    }
 }
