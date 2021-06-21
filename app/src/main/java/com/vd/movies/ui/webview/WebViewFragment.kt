@@ -1,5 +1,6 @@
 package com.vd.movies.ui.webview
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +19,10 @@ class WebViewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mUrl = arguments?.let { WebViewFragmentArgs.fromBundle(it).url } ?: "";
+        mUrl = arguments?.let { WebViewFragmentArgs.fromBundle(it).url } ?: ""
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +41,6 @@ class WebViewFragment : Fragment() {
         }
         mBinding.webview.loadUrl(mUrl)
 
-        return mBinding.root;
+        return mBinding.root
     }
 }

@@ -8,7 +8,7 @@ import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("src")
 fun loadImage(view: ImageView, imageUrl: String?) {
-    Glide.with(view.getContext())
+    Glide.with(view.context)
         .load(imageUrl).apply(RequestOptions())
         .into(view)
 }

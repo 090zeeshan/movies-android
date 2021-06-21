@@ -1,16 +1,17 @@
 package com.vd.movies.ui.home
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(repository: Repository) : BaseViewModel(repository,"Movies") {
-    private val recentCount = 5;
+    private val recentCount = 5
     val searchKey = MutableLiveData("")
 
     var recentFavorites: LiveData<List<Movie>>

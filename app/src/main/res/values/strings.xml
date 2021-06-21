@@ -26,4 +26,5 @@
     <string name="no_data_found">No Data Found</string>
     <string name="search">Search</string>
     <string name="watch_trailer_on_imdb">Watch Trailer on IMDB</string>
+    <string name="no_movie_found">No Movie Found</string>
 </resources>

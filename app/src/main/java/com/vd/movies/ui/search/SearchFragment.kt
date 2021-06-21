@@ -6,14 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.vd.movies.data.api.Api
-import com.vd.movies.data.db.AppDatabase
-import com.vd.movies.data.repository.Repository
 import com.vd.movies.databinding.FragmentSearchBinding
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
-import com.vd.movies.ui.util.NetworkUtilImp
 import com.vd.movies.ui.util.onDone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*

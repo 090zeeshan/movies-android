@@ -7,7 +7,7 @@ fun EditText.onDone(callback: () -> Unit) {
     setOnEditorActionListener { _, actionId, _ ->
         if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH) {
             callback.invoke()
-            true
+            return@setOnEditorActionListener true
         }
         false
     }

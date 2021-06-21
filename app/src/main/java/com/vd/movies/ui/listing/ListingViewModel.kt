@@ -1,11 +1,14 @@
 package com.vd.movies.ui.listing
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.Transformations
 import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.data.repository.Repository
 import com.vd.movies.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,7 +17,7 @@ class ListingViewModel @Inject constructor(repository: Repository, handle: Saved
     val isLoaderVisible = MutableLiveData(true)
     val isNotDataLabelVisible = MutableLiveData(false)
     var isListVisible: LiveData<Boolean> = MutableLiveData(false)
-    val listingType = handle["listingType"]?: ListingType.FAVORITES
+    private val listingType = handle["listingType"]?: ListingType.FAVORITES
 
     init {
         title.value = when (listingType) {
@@ -51,7 +54,7 @@ class ListingViewModel @Inject constructor(repository: Repository, handle: Saved
 
     override fun onCleared() {
         super.onCleared()
-        Log.i("LVM", "onCleared")
+        Timber.i(  "onCleared")
     }
 
 }

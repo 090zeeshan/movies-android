@@ -1,8 +1,6 @@
 package com.vd.movies.data.db
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.vd.movies.data.db.dao.MovieDao
 import com.vd.movies.data.db.entity.Movie
