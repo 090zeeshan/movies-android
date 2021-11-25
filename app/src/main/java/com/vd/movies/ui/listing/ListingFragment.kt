@@ -30,7 +30,10 @@ class ListingFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MoviesAdapter(requireContext(), emptyList(), { viewModel.onItemClicked(it) })
+        adapter = MoviesAdapter(
+            requireContext(),
+            emptyList(),
+            { it, binding -> viewModel.onItemClicked(it) })
         rvMovies.adapter = adapter
         viewModel.movies.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)

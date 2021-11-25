@@ -12,7 +12,7 @@ import com.vd.movies.databinding.ItemMovieResultBinding
 class MoviesAdapter(
     private val context: Context,
     private var list: List<Movie>,
-    private val onItemClicked: (Movie) -> Unit,
+    private val onItemClicked: (Movie, ViewDataBinding) -> Unit,
     private val layoutType: LayoutType = LayoutType.RESULT_ITEM
 ) :
     RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
@@ -44,7 +44,7 @@ class MoviesAdapter(
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(list[position])
-        holder.itemView.setOnClickListener { onItemClicked(list[position]) }
+        holder.itemView.setOnClickListener { onItemClicked(list[position], holder.binding) }
     }
 
 

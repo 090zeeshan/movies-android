@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.vd.movies.data.db.entity.Movie
@@ -28,7 +29,7 @@ class HomeFragment : BaseFragment() {
     private lateinit var watchedAdapter: MoviesAdapter
     private lateinit var watchlistAdapter: MoviesAdapter
 
-    private val onItemClicked: (movie: Movie) -> Unit = {
+    private val onItemClicked: (movie: Movie, binding: ViewDataBinding) -> Unit = { it, _ ->
         viewModel.onItemClicked(it)
     }
 

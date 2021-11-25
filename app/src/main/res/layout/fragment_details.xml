@@ -8,6 +8,8 @@
         <variable
             name="viewModel"
             type="com.vd.movies.ui.details.DetailsViewModel" />
+
+        <import type="com.vd.movies.ui.details.DetailsFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
+                android:id="@+id/row"
+                android:transitionName="@{DetailsFragment.getRowTransitionName(viewModel.imdbId)}"
                 android:background="@drawable/bg_recent_movies"
                 android:padding="@dimen/_8sdp">
 
@@ -38,14 +42,16 @@
                     android:layout_height="@dimen/_150sdp"
                     android:adjustViewBounds="true"
                     android:padding="@dimen/_4sdp"
+                    android:transitionName="@{DetailsFragment.getPosterTransitionName(viewModel.imdbId)}"
+                    app:src="@{viewModel.movie.poster}"
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:src="@{viewModel.movie.poster}" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvTitle"
                     style="@style/MovieTitle"
+                    android:transitionName="@{DetailsFragment.getTitleTransitionName(viewModel.imdbId)}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.movie.title}"
@@ -56,6 +62,7 @@
 
                 <TextView
                     android:id="@+id/tvYear"
+                    android:transitionName="@{DetailsFragment.getYearTransitionName(viewModel.imdbId)}"
                     style="@style/UnderTitleInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,6 +74,7 @@
                 <TextView
                     android:id="@+id/tvType"
                     style="@style/UnderTitleInfo"
+                    android:transitionName="@{DetailsFragment.getTypeTransitionName(viewModel.imdbId)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/underTitleInfoMargin"

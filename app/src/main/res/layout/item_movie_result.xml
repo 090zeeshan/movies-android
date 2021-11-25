@@ -8,21 +8,27 @@
         <variable
             name="movie"
             type="com.vd.movies.data.db.entity.Movie" />
+
+        <import type="com.vd.movies.ui.details.DetailsFragment" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/row"
         android:layout_width="match_parent"
-        android:paddingVertical="@dimen/_10sdp"
-        android:paddingHorizontal="@dimen/_4sdp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6sdp"
         android:background="@drawable/bg_recent_movies"
-        android:layout_height="wrap_content">
+        android:paddingHorizontal="@dimen/_4sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        android:transitionName="@{DetailsFragment.getRowTransitionName(movie.imdbId)}">
 
         <ImageView
             android:id="@+id/ivThumbnail"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
             android:padding="@dimen/_2sdp"
+            android:transitionName="@{DetailsFragment.getPosterTransitionName(movie.imdbId)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:src="@{movie.poster}" />
@@ -33,8 +39,9 @@
             android:layout_height="wrap_content"
             android:text="@{movie.title}"
             android:textSize="@dimen/_16ssp"
-            app:layout_constraintStart_toEndOf="@id/ivThumbnail"
+            android:transitionName="@{DetailsFragment.getTitleTransitionName(movie.imdbId)}"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivThumbnail"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Inception\n" />
 
@@ -53,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{movie.year}"
+            android:transitionName="@{DetailsFragment.getYearTransitionName(movie.imdbId)}"
             app:layout_constraintStart_toEndOf="@id/tvReleaseYearLbl"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             tools:text="2010" />
@@ -74,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{movie.type}"
+            android:transitionName="@{DetailsFragment.getTypeTransitionName(movie.imdbId)}"
             app:layout_constraintStart_toEndOf="@id/tvTypeLbl"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             tools:text="Movie" />
