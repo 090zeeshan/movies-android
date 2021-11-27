@@ -176,6 +176,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ScrollView
+                android:id="@+id/svPlot"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_4sdp"
@@ -339,6 +340,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:id="@+id/layoutMovieBtns"
                 android:layout_height="wrap_content">
 
                 <Button

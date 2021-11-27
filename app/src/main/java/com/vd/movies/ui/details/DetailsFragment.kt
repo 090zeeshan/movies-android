@@ -1,10 +1,14 @@
 package com.vd.movies.ui.details
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.vd.movies.R
@@ -16,20 +20,21 @@ import kotlinx.android.synthetic.main.fragment_details.*
 
 @AndroidEntryPoint
 class DetailsFragment : BaseFragment(false) {
+    private lateinit var mBinding: FragmentDetailsBinding
     private val viewModel: DetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        mBinding = FragmentDetailsBinding.inflate(inflater, container, false)
+        mBinding.viewModel = viewModel
+        mBinding.lifecycleOwner = viewLifecycleOwner
 
         sharedElementEnterTransition = TransitionInflater.from(context)
             .inflateTransition(R.transition.shared_element_transition)
         postponeEnterTransition()
-        return binding.root
+        return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,10 +44,26 @@ class DetailsFragment : BaseFragment(false) {
         btnFavorite.setOnClickListener { viewModel.onAddToFavoritesPressed() }
         btnImdb.setOnClickListener { viewModel.onViewOnImdbPressed() }
         viewModel.movie.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                startPostponedEnterTransition()
-            }
+            it?.let { startInAnimations() }
         })
+    }
+
+    private fun startInAnimations() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            startPostponedEnterTransition()
+            mBinding.svPlot.startAnimation(
+                AnimationUtils.loadAnimation(
+                    requireContext(),
+                    R.anim.movie_plot_in
+                )
+            )
+            mBinding.layoutMovieBtns.startAnimation(
+                AnimationUtils.loadAnimation(
+                    requireContext(),
+                    R.anim.movie_buttons_in
+                )
+            )
+        }, 100)
     }
 
     override fun getViewModel(): BaseViewModel? {
