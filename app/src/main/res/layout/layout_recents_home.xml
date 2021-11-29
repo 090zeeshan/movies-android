@@ -8,13 +8,19 @@
         <variable
             name="title"
             type="String" />
+
         <variable
             name="isDataAvailable"
             type="Boolean" />
+
+        <import type="com.vd.movies.ui.listing.ListingFragment" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/card"
+        android:transitionName="@{ListingFragment.getTransitionName(title)}"
         android:background="@drawable/bg_recent_movies"
         android:padding="@dimen/_8sdp"
         android:layout_height="match_parent">

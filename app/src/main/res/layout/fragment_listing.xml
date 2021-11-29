@@ -8,12 +8,16 @@
         <variable
             name="viewModel"
             type="com.vd.movies.ui.listing.ListingViewModel" />
+
+        <import type="com.vd.movies.ui.listing.ListingFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/container"
         android:layout_height="match_parent"
         android:padding="@dimen/_4sdp"
+        android:transitionName="@{ListingFragment.getTransitionName(viewModel.title)}"
         tools:context=".ui.listing.ListingFragment">
 
         <androidx.recyclerview.widget.RecyclerView

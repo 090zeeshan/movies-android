@@ -7,30 +7,38 @@
         <variable
             name="movie"
             type="com.vd.movies.data.db.entity.Movie" />
+
+        <import type="com.vd.movies.ui.details.DetailsFragment" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/row"
         android:layout_width="@dimen/_120sdp"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/_2sdp"
-        android:layout_height="match_parent">
+        android:transitionName="@{DetailsFragment.getRowTransitionName(movie.imdbId)}">
 
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/ivPoster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:transitionName="@{DetailsFragment.getPosterTransitionName(movie.imdbId)}"
             app:src="@{movie.poster}" />
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@android:color/black"
             android:ellipsize="end"
             android:gravity="center"
-            android:background="@android:color/black"
             android:padding="@dimen/_2sdp"
-            android:textColor="@android:color/white"
             android:text="@{movie.title}"
+            android:textColor="@android:color/white"
+            android:transitionName="@{DetailsFragment.getTitleTransitionName(movie.imdbId)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

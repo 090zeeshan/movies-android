@@ -22,7 +22,7 @@ class ListingViewModel @Inject constructor(repository: Repository, handle: Saved
     init {
         title.value = when (listingType) {
             ListingType.FAVORITES -> "Favorites"
-            ListingType.WATCHED -> "Watched List"
+            ListingType.WATCHED -> "Watched"
             ListingType.WATCHLIST -> "Watchlist"
         }
         fetchList(listingType)

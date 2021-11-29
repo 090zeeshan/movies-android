@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.doOnPreDraw
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.vd.movies.data.db.entity.Movie
 import com.vd.movies.databinding.FragmentHomeBinding
+import com.vd.movies.databinding.ItemMovieRecentBinding
 import com.vd.movies.ui.base.BaseFragment
 import com.vd.movies.ui.base.BaseViewModel
 import com.vd.movies.ui.search.MoviesAdapter
@@ -24,12 +28,19 @@ private const val TAG = "HomeF"
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
+    private lateinit var mBinding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var favoritesAdapter: MoviesAdapter
     private lateinit var watchedAdapter: MoviesAdapter
     private lateinit var watchlistAdapter: MoviesAdapter
 
-    private val onItemClicked: (movie: Movie, binding: ViewDataBinding) -> Unit = { it, _ ->
+    private val onItemClicked: (movie: Movie, binding: ViewDataBinding) -> Unit = { it, binding ->
+        val resultBinding = binding as ItemMovieRecentBinding
+        mNavExtras = FragmentNavigatorExtras(
+            resultBinding.ivPoster to resultBinding.ivPoster.transitionName,
+            resultBinding.tvTitle to resultBinding.tvTitle.transitionName,
+            resultBinding.row to resultBinding.row.transitionName
+        )
         viewModel.onItemClicked(it)
     }
 
@@ -38,22 +49,35 @@ class HomeFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         Timber.tag(TAG)
-        Timber.i( "onCreateView")
+        Timber.i("onCreateView")
 
-        val binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-        return binding.root
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        mBinding.lifecycleOwner = viewLifecycleOwner
+        mBinding.viewModel = viewModel
+        postponeEnterTransition()
+        mBinding.root.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
+        return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Timber.i( "onViewCreated")
+        Timber.i("onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         btnSearch.setOnClickListener { viewModel.onSearchClicked() }
         etSearch.onDone { viewModel.onSearchClicked() }
-        layoutFavoriteList.btnViewAll.setOnClickListener { viewModel.onViewAllFavoriteClicked() }
-        layoutWatchlist.btnViewAll.setOnClickListener { viewModel.onViewAllWatchlistClicked() }
-        layoutWatchedList.btnViewAll.setOnClickListener { viewModel.onViewAllWatchedListClicked() }
+        layoutFavoriteList.btnViewAll.setOnClickListener {
+            setNavExtrasForRecents(mBinding.layoutFavoriteList.card)
+            viewModel.onViewAllFavoriteClicked()
+        }
+        layoutWatchlist.btnViewAll.setOnClickListener {
+            setNavExtrasForRecents(mBinding.layoutWatchlist.card)
+            viewModel.onViewAllWatchlistClicked()
+        }
+        layoutWatchedList.btnViewAll.setOnClickListener {
+            setNavExtrasForRecents(mBinding.layoutWatchedList.card)
+            viewModel.onViewAllWatchedListClicked()
+        }
 
         favoritesAdapter = MoviesAdapter(
             requireContext(),
@@ -87,6 +111,13 @@ class HomeFragment : BaseFragment() {
         viewModel.recentWatchlist.observe(viewLifecycleOwner, Observer {
             watchlistAdapter.setData(it)
         })
+    }
+
+    private fun setNavExtrasForRecents(layout: ConstraintLayout) {
+        mNavExtras = FragmentNavigatorExtras(
+            layout to layout.transitionName
+        )
+        Timber.i(layout.transitionName)
     }
 
     override fun getViewModel(): BaseViewModel? {

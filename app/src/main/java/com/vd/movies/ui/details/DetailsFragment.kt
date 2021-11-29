@@ -7,7 +7,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -43,8 +42,10 @@ class DetailsFragment : BaseFragment(false) {
         btnWatched.setOnClickListener { viewModel.onAddToWatchedListPressed() }
         btnFavorite.setOnClickListener { viewModel.onAddToFavoritesPressed() }
         btnImdb.setOnClickListener { viewModel.onViewOnImdbPressed() }
-        viewModel.movie.observe(viewLifecycleOwner, Observer {
-            it?.let { startInAnimations() }
+        viewModel.isContentVisible.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                startInAnimations()
+            }
         })
     }
 
