@@ -19,31 +19,41 @@
         app:layoutDescription="@xml/fragment_home_scene"
         tools:context=".ui.home.HomeFragment">
 
-        <View
-            android:id="@+id/handler"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:translationZ="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+        <!--        <View-->
+        <!--            android:id="@+id/handler"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:translationZ="2dp"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="parent" />-->
 
         <RelativeLayout
             android:id="@+id/outerLayoutSearch"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@color/floralWhite"
             android:gravity="center_vertical"
             android:translationZ="1dp"
-            app:layout_constraintBottom_toTopOf="@id/handler"
             app:layout_constraintTop_toTopOf="parent">
 
             <include
                 android:id="@+id/layoutSearch"
                 layout="@layout/layout_search"
                 bind:searchKey="@={viewModel.searchKey}" />
-
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/ivUp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_up_circle"
+            app:layout_constraintBottom_toBottomOf="@id/outerLayoutSearch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="24dp"
+            android:translationZ="2dp"
+            android:rotation="180"
+            android:visibility="invisible"
+            android:layout_height="wrap_content" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutRecent"
@@ -51,7 +61,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/handler">
+            app:layout_constraintTop_toBottomOf="@id/outerLayoutSearch">
 
             <include
                 android:id="@+id/layoutFavoriteList"
