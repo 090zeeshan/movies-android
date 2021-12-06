@@ -25,19 +25,21 @@ class DetailsFragment : BaseFragment(false) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentDetailsBinding.inflate(inflater, container, false)
         mBinding.viewModel = viewModel
         mBinding.lifecycleOwner = viewLifecycleOwner
 
-        sharedElementEnterTransition = TransitionInflater.from(context)
-            .inflateTransition(R.transition.shared_element_transition)
-        postponeEnterTransition()
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedElementEnterTransition = TransitionInflater.from(context)
+            .inflateTransition(R.transition.shared_element_transition)
+        postponeEnterTransition()
+
         btnWatchList.setOnClickListener { viewModel.onAddToWatchListPressed() }
         btnWatched.setOnClickListener { viewModel.onAddToWatchedListPressed() }
         btnFavorite.setOnClickListener { viewModel.onAddToFavoritesPressed() }
@@ -67,7 +69,7 @@ class DetailsFragment : BaseFragment(false) {
         }, 100)
     }
 
-    override fun getViewModel(): BaseViewModel? {
+    override fun getViewModel(): BaseViewModel {
         return viewModel
     }
 

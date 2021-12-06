@@ -34,14 +34,14 @@ class HomeFragment : BaseFragment() {
     private lateinit var watchedAdapter: MoviesAdapter
     private lateinit var watchlistAdapter: MoviesAdapter
 
-    private val onItemClicked: (movie: Movie, binding: ViewDataBinding) -> Unit = { it, binding ->
+    private fun onItemClicked(movie: Movie, binding: ViewDataBinding) {
         val resultBinding = binding as ItemMovieRecentBinding
         mNavExtras = FragmentNavigatorExtras(
             resultBinding.ivPoster to resultBinding.ivPoster.transitionName,
             resultBinding.tvTitle to resultBinding.tvTitle.transitionName,
             resultBinding.row to resultBinding.row.transitionName
         )
-        viewModel.onItemClicked(it)
+        viewModel.onItemClicked(movie)
     }
 
     override fun onCreateView(
@@ -82,19 +82,19 @@ class HomeFragment : BaseFragment() {
         favoritesAdapter = MoviesAdapter(
             requireContext(),
             emptyList(),
-            onItemClicked,
+            ::onItemClicked,
             MoviesAdapter.LayoutType.RECENT_ITEM
         )
         watchedAdapter = MoviesAdapter(
             requireContext(),
             emptyList(),
-            onItemClicked,
+            ::onItemClicked,
             MoviesAdapter.LayoutType.RECENT_ITEM
         )
         watchlistAdapter = MoviesAdapter(
             requireContext(),
             emptyList(),
-            onItemClicked,
+            ::onItemClicked,
             MoviesAdapter.LayoutType.RECENT_ITEM
         )
 

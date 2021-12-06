@@ -11,60 +11,82 @@
             type="com.vd.movies.ui.home.HomeViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/_4sdp"
+        app:layoutDescription="@xml/fragment_home_scene"
         tools:context=".ui.home.HomeFragment">
 
-        <include
-            android:id="@+id/layoutSearch"
-            layout="@layout/layout_search"
-            bind:searchKey="@={viewModel.searchKey}" />
-
-        <ScrollView
+        <View
+            android:id="@+id/handler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:translationZ="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
+            android:id="@+id/outerLayoutSearch"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/floralWhite"
+            android:gravity="center_vertical"
+            android:translationZ="1dp"
+            app:layout_constraintBottom_toTopOf="@id/handler"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/layoutSearch"
+                layout="@layout/layout_search"
+                bind:searchKey="@={viewModel.searchKey}" />
+
+        </RelativeLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutRecent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/handler">
+
+            <include
+                android:id="@+id/layoutFavoriteList"
+                layout="@layout/layout_recents_home"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/homeListingMargin"
+                app:layout_constraintBottom_toTopOf="@id/layoutWatchlist"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:isDataAvailable="@{viewModel.favsDataAvailable}"
+                bind:title="@{@string/favorites}" />
 
+            <include
+                android:id="@+id/layoutWatchlist"
+                layout="@layout/layout_recents_home"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/homeListingMargin"
+                app:layout_constraintBottom_toTopOf="@id/layoutWatchedList"
+                app:layout_constraintTop_toBottomOf="@id/layoutFavoriteList"
+                bind:isDataAvailable="@{viewModel.watchlistDataAvailable}"
+                bind:title="@{@string/watchlist}" />
 
-                <include
-                    android:id="@+id/layoutFavoriteList"
-                    layout="@layout/layout_recents_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/homeListingSize"
-                    android:layout_marginTop="@dimen/homeListingMargin"
-                    app:layout_constraintTop_toTopOf="parent"
-                    bind:isDataAvailable="@{viewModel.favsDataAvailable}"
-                    bind:title="@{@string/favorites}" />
+            <include
+                android:id="@+id/layoutWatchedList"
+                layout="@layout/layout_recents_home"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/homeListingMargin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutWatchlist"
+                bind:isDataAvailable="@{viewModel.watchedListDataAvailable}"
+                bind:title="@{@string/watched}" />
 
-                <include
-                    android:id="@+id/layoutWatchlist"
-                    layout="@layout/layout_recents_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/homeListingSize"
-                    android:layout_marginTop="@dimen/homeListingMargin"
-                    app:layout_constraintTop_toBottomOf="@id/layoutFavoriteList"
-                    bind:isDataAvailable="@{viewModel.watchlistDataAvailable}"
-                    bind:title="@{@string/watchlist}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <include
-                    android:id="@+id/layoutWatchedList"
-                    layout="@layout/layout_recents_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/homeListingSize"
-                    android:layout_marginTop="@dimen/homeListingMargin"
-                    app:layout_constraintTop_toBottomOf="@id/layoutWatchlist"
-                    bind:isDataAvailable="@{viewModel.watchedListDataAvailable}"
-                    bind:title="@{@string/watched}" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
-
-    </LinearLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
