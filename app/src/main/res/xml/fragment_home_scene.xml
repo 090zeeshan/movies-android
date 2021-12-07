@@ -17,9 +17,7 @@
 
         <ConstraintOverride
             android:id="@id/layoutRecent"
-            android:visibility="invisible">
-
-        </ConstraintOverride>
+            android:visibility="invisible" />
 
         <Constraint
             android:id="@id/ivUp"
@@ -30,6 +28,19 @@
             motion:layout_constraintBottom_toBottomOf="@id/outerLayoutSearch"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@id/ivCircle"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:alpha="0.1"
+            motion:layout_constraintBottom_toTopOf="parent"
+            motion:layout_constraintEnd_toStartOf="parent">
+            <CustomAttribute
+                motion:attributeName="ColorFilter"
+                motion:customColorValue="@color/yellow" />
+        </Constraint>
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -38,6 +49,14 @@
                 motion:attributeName="backgroundColor"
                 motion:customColorValue="#ffffff" />
         </ConstraintOverride>
+
+        <ConstraintOverride
+            android:id="@id/ivCircle"
+            android:alpha="0.1">
+            <CustomAttribute
+                motion:attributeName="ColorFilter"
+                motion:customColorValue="@color/yellow" />
+        </ConstraintOverride>
     </ConstraintSet>
 
     <Transition
@@ -45,6 +64,26 @@
         motion:constraintSetStart="@+id/start"
         motion:duration="500"
         motion:pathMotionArc="startVertical">
+
+        <KeyFrameSet>
+            <KeyPosition
+                motion:framePosition="50"
+                motion:keyPositionType="pathRelative"
+                motion:motionTarget="@id/ivCircle"
+                motion:pathMotionArc="startVertical"
+                motion:percentX="0.5"
+                motion:percentY="0.4" />
+            <KeyAttribute
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                motion:framePosition="50"
+                android:alpha="1"
+                motion:motionTarget="@id/ivCircle">
+                <CustomAttribute
+                    motion:attributeName="ColorFilter"
+                    motion:customColorValue="@color/colorPrimaryDark" />
+            </KeyAttribute>
+        </KeyFrameSet>
 
         <OnSwipe
             motion:dragDirection="dragUp"

@@ -68,7 +68,8 @@
             android:id="@+id/outerLayoutSearch"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="5dp" />
 
         <include
             android:layout_width="match_parent"
@@ -92,6 +93,14 @@
             android:visibility="invisible"
             android:layout_height="wrap_content" />
 
+
+        <ImageView
+            android:id="@+id/ivCircle"
+            android:layout_width="10dp"
+            android:src="@drawable/circle"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            android:layout_height="10dp" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
