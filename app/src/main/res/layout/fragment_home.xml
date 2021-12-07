@@ -12,6 +12,7 @@
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/layoutMotion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -19,49 +20,53 @@
         app:layoutDescription="@xml/fragment_home_scene"
         tools:context=".ui.home.HomeFragment">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutRecent"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/svRecent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/outerLayoutSearch">
 
-            <include
-                android:id="@+id/layoutFavoriteList"
-                layout="@layout/layout_recents_home"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/homeListingMargin"
-                app:layout_constraintBottom_toTopOf="@id/layoutWatchlist"
-                app:layout_constraintTop_toTopOf="parent"
-                bind:isDataAvailable="@{viewModel.favsDataAvailable}"
-                bind:title="@{@string/favorites}" />
+                android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/layoutWatchlist"
-                layout="@layout/layout_recents_home"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/homeListingMargin"
-                app:layout_constraintBottom_toTopOf="@id/layoutWatchedList"
-                app:layout_constraintTop_toBottomOf="@id/layoutFavoriteList"
-                bind:isDataAvailable="@{viewModel.watchlistDataAvailable}"
-                bind:title="@{@string/watchlist}" />
+                <include
+                    android:id="@+id/layoutFavoriteList"
+                    layout="@layout/layout_recents_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/homeListingSize"
+                    android:layout_marginTop="@dimen/homeListingMargin"
+                    app:layout_constraintBottom_toTopOf="@id/layoutWatchlist"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:isDataAvailable="@{viewModel.favsDataAvailable}"
+                    bind:title="@{@string/favorites}" />
 
-            <include
-                android:id="@+id/layoutWatchedList"
-                layout="@layout/layout_recents_home"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/homeListingMargin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutWatchlist"
-                bind:isDataAvailable="@{viewModel.watchedListDataAvailable}"
-                bind:title="@{@string/watched}" />
+                <include
+                    android:id="@+id/layoutWatchlist"
+                    layout="@layout/layout_recents_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/homeListingSize"
+                    android:layout_marginTop="@dimen/homeListingMargin"
+                    app:layout_constraintBottom_toTopOf="@id/layoutWatchedList"
+                    app:layout_constraintTop_toBottomOf="@id/layoutFavoriteList"
+                    bind:isDataAvailable="@{viewModel.watchlistDataAvailable}"
+                    bind:title="@{@string/watchlist}" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <include
+                    android:id="@+id/layoutWatchedList"
+                    layout="@layout/layout_recents_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/homeListingSize"
+                    android:layout_marginTop="@dimen/homeListingMargin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layoutWatchlist"
+                    bind:isDataAvailable="@{viewModel.watchedListDataAvailable}"
+                    bind:title="@{@string/watched}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
 
         <RelativeLayout
@@ -72,35 +77,35 @@
             tools:layout_editor_absoluteX="5dp" />
 
         <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/outerLayoutSearch"
-            app:layout_constraintBottom_toBottomOf="@id/outerLayoutSearch"
             android:id="@+id/layoutSearch"
             layout="@layout/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/outerLayoutSearch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/outerLayoutSearch"
             bind:searchKey="@={viewModel.searchKey}" />
 
         <ImageView
             android:id="@+id/ivUp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_up_circle"
-            app:layout_constraintBottom_toBottomOf="@id/outerLayoutSearch"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:rotation="180"
+            android:src="@drawable/ic_up_circle"
             android:visibility="invisible"
-            android:layout_height="wrap_content" />
+            app:layout_constraintBottom_toBottomOf="@id/outerLayoutSearch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <ImageView
             android:id="@+id/ivCircle"
             android:layout_width="10dp"
+            android:layout_height="10dp"
             android:src="@drawable/circle"
-            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="parent"
-            android:layout_height="10dp" />
+            app:layout_constraintStart_toEndOf="parent" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

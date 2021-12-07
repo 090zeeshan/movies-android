@@ -16,7 +16,7 @@
         </Constraint>
 
         <ConstraintOverride
-            android:id="@id/layoutRecent"
+            android:id="@id/svRecent"
             android:visibility="invisible" />
 
         <Constraint
@@ -39,9 +39,11 @@
             <CustomAttribute
                 motion:attributeName="ColorFilter"
                 motion:customColorValue="@color/yellow" />
+
         </Constraint>
 
     </ConstraintSet>
+
 
     <ConstraintSet android:id="@+id/end">
         <ConstraintOverride android:id="@id/outerLayoutSearch">
@@ -59,6 +61,7 @@
         </ConstraintOverride>
     </ConstraintSet>
 
+
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@+id/start"
@@ -74,19 +77,20 @@
                 motion:percentX="0.5"
                 motion:percentY="0.4" />
             <KeyAttribute
+                android:alpha="1"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
                 motion:framePosition="50"
-                android:alpha="1"
                 motion:motionTarget="@id/ivCircle">
                 <CustomAttribute
                     motion:attributeName="ColorFilter"
                     motion:customColorValue="@color/colorPrimaryDark" />
             </KeyAttribute>
+
         </KeyFrameSet>
 
         <OnSwipe
             motion:dragDirection="dragUp"
-            motion:touchAnchorId="@id/layoutRecent" />
+            motion:touchAnchorId="@id/svRecent" />
     </Transition>
 </MotionScene>
